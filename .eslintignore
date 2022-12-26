@@ -1,0 +1,8 @@
+node_modules
+dist
+docs
+misc
+.env
+.env.*
+!.env.example
+package-lock.json
