@@ -9,7 +9,7 @@
 </script>
 
 {#if $configuration.units === Units.Imperial}
-  <span>{cToF(value).toFixed(0)}˚</span>
+  <span>{cToF(value).toFixed(0)}°</span>
 {:else}
-  <span>{value.toFixed(1)}˚</span>
+  <span>{value.toFixed(1)}°</span>
 {/if}
