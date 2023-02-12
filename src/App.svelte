@@ -15,7 +15,6 @@
   import HourlyDetails from './components/HourlyDetails.svelte';
   import SettingsModal from './SettingsModal.svelte';
   import AboutModal from './AboutModal.svelte';
-  import ErrorModal from './ErrorModal.svelte';
 
   /* Constants */
   const navbarButtonClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5';
@@ -23,10 +22,10 @@
   /* State */
   let provider: Provider;
   let weather: Weather | undefined;
+  let error: string | undefined;
   let nextRefreshTimestamp: Date;
   let settingsModal: SettingsModal;
   let aboutModal: AboutModal;
-  let errorModal: ErrorModal;
 
   /* Provider Factory getter */
   const providerFactory = (provider: Provider) => provider.constructor as unknown as ProviderFactory;
@@ -35,8 +34,10 @@
     /* Fetch weather */
     try {
       weather = await provider.fetch();
+      error = undefined;
     } catch (err) {
-      errorModal.open('Fetching Weather', err.message);
+      weather = undefined;
+      error = err.message;
     }
 
     /* Compute next refresh timestamp */
@@ -129,6 +130,11 @@
           </AccordionItem>
         {/each}
       </Accordion>
+    {:else if error}
+      <Alert class="text-lg w-3/4 my-6 mx-auto" color="red">
+        <span slot="icon"><Icon icon="mdi:error-outline" class="text-2xl" /></span>
+        <span class="font-semibold">Error fetching weather: </span>{error}
+      </Alert>
     {/if}
 
     <div class="grid place-items-center my-4">
@@ -142,5 +148,4 @@
 
   <SettingsModal bind:this={settingsModal} />
   <AboutModal bind:this={aboutModal} textColorClass="text-gray-700 dark:text-gray-300" />
-  <ErrorModal bind:this={errorModal} textColorClass="text-red-700 dark:text-red-300" />
 </main>
