@@ -6,5 +6,13 @@ import { WeatherFlowProvider } from './WeatherFlowProvider';
 import { VisualCrossingProvider } from './VisualCrossingProvider';
 import { TomorrowIoProvider } from './TomorrowIoProvider';
 import { OpenMeteoProvider } from './OpenMeteoProvider';
+import { PirateWeatherProvider } from './PirateWeatherProvider';
 
-export const ProviderFactories: ProviderFactory[] = [ExampleProvider, WeatherFlowProvider, VisualCrossingProvider, TomorrowIoProvider, OpenMeteoProvider];
+export const ProviderFactories: ProviderFactory[] = [
+  ExampleProvider,
+  WeatherFlowProvider,
+  VisualCrossingProvider,
+  TomorrowIoProvider,
+  OpenMeteoProvider,
+  PirateWeatherProvider,
+];
