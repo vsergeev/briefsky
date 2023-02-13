@@ -3,6 +3,7 @@ import type { Provider, Weather } from './Provider';
 export class ExampleProvider implements Provider {
   static id = 'example';
   static description = 'Example';
+  static attribution = undefined;
   static fields = [];
 
   async fetch(): Promise<Weather> {

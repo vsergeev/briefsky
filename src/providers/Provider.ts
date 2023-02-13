@@ -61,6 +61,7 @@ export interface ProviderFactory {
   /* Provider Specification */
   id: string;
   description: string;
+  attribution: string | undefined;
   fields: {
     name: string;
     description: string;

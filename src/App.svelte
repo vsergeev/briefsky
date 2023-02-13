@@ -144,8 +144,15 @@
       </div>
     {/if}
 
-    <div class="grid place-items-center my-4">
-      <div>
+    <div class="grid place-items-center mt-3">
+      {#if provider && providerFactory(provider).attribution !== undefined}
+        <div class="mb-3 text-sm">
+          Weather data by <a href={providerFactory(provider).attribution} target="_blank" rel="noreferrer" class="hover:underline"
+            >{providerFactory(provider).description}</a
+          >
+        </div>
+      {/if}
+      <div class="mb-3">
         <FooterIcon href="https://github.com/vsergeev/briefsky" target="_blank" class="text-gray-400 hover:text-gray-900">
           <Icon icon="mdi:github" class="text-3xl" />
         </FooterIcon>
