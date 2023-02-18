@@ -1,3 +1,5 @@
+import type { Location } from './Location';
+
 export enum ConditionsIcon {
   Clear,
   PartlyCloudy,
@@ -62,13 +64,14 @@ export interface ProviderFactory {
   id: string;
   description: string;
   attribution: string | undefined;
+  requiresLocation: boolean;
   fields: {
     name: string;
     description: string;
   }[];
 
   /* Provider Instantiation */
-  fromParams(params: object): Provider | null;
+  fromParams(params: object, location?: Location): Provider | null;
 }
 
 export interface Provider {

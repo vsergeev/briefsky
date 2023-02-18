@@ -1,4 +1,5 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
+import type { Location } from './Location';
 import { ConditionsIcon } from './Provider';
 
 const CONDITIONS_ICON_MAP: { [key: string]: ConditionsIcon } = {
@@ -24,17 +25,15 @@ export class VisualCrossingProvider implements Provider {
   static id = 'visualcrossing';
   static description = 'Visual Crossing';
   static attribution = 'https://www.visualcrossing.com/';
-  static fields = [
-    { name: 'api_key', description: 'API Key' },
-    { name: 'location', description: 'Location' },
-  ];
+  static requiresLocation = true;
+  static fields = [{ name: 'api_key', description: 'API Key' }];
 
   static ENDPOINT_URL = 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
 
   apiKey: string;
-  location: string;
+  location: Location;
 
-  constructor(apiKey: string, location: string) {
+  constructor(apiKey: string, location: Location) {
     this.apiKey = apiKey;
     this.location = location;
   }
@@ -44,7 +43,7 @@ export class VisualCrossingProvider implements Provider {
     try {
       response = await fetch(
         VisualCrossingProvider.ENDPOINT_URL +
-          encodeURIComponent(this.location) +
+          encodeURIComponent(`${this.location.latitude},${this.location.longitude}`) +
           '?' +
           new URLSearchParams({ unitGroup: 'metric', key: this.apiKey, iconSet: 'icons2' })
       );
@@ -119,8 +118,8 @@ export class VisualCrossingProvider implements Provider {
     };
   }
 
-  static fromParams(params: object): Provider | null {
-    if (params['api_key'] === undefined || params['location'] === undefined) return null;
-    return new VisualCrossingProvider(params['api_key'], params['location']);
+  static fromParams(params: object, location?: Location): Provider | null {
+    if (params['api_key'] === undefined || location === undefined) return null;
+    return new VisualCrossingProvider(params['api_key'], location);
   }
 }

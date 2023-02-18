@@ -1,4 +1,5 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
+import type { Location } from './Location';
 import { ConditionsIcon } from './Provider';
 
 const CONDITIONS_TEXT_MAP: { [key: string]: string } = {
@@ -67,21 +68,17 @@ export class OpenMeteoProvider implements Provider {
   static id = 'openmeteo';
   static description = 'Open-Meteo';
   static attribution = 'https://open-meteo.com';
-  static fields = [
-    { name: 'latitude', description: 'Latitude (decimal)' },
-    { name: 'longitude', description: 'Longitude (decimal)' },
-  ];
+  static requiresLocation = true;
+  static fields = [];
 
   static ENDPOINT_URL = 'https://api.open-meteo.com/v1/forecast';
   static DAILY_FIELDS = ['weathercode', 'temperature_2m_max', 'temperature_2m_min', 'sunrise', 'sunset', 'precipitation_sum'];
   static HOURLY_FIELDS = ['temperature_2m', 'relativehumidity_2m', 'dewpoint_2m', 'apparent_temperature', 'weathercode', 'pressure_msl', 'visibility'];
 
-  latitude: string;
-  longitude: string;
+  location: Location;
 
-  constructor(latitude: string, longitude: string) {
-    this.latitude = latitude;
-    this.longitude = longitude;
+  constructor(location: Location) {
+    this.location = location;
   }
 
   async fetch(): Promise<Weather> {
@@ -96,8 +93,8 @@ export class OpenMeteoProvider implements Provider {
           '?' +
           new URLSearchParams(
             [
-              ['latitude', this.latitude],
-              ['longitude', this.longitude],
+              ['latitude', this.location.latitude],
+              ['longitude', this.location.longitude],
               ['timezone', 'auto'],
               ['timeformat', 'unixtime'],
               ['start_date', startDate],
@@ -187,8 +184,8 @@ export class OpenMeteoProvider implements Provider {
     };
   }
 
-  static fromParams(params: object): Provider | null {
-    if (params['latitude'] === undefined || params['longitude'] === undefined) return null;
-    return new OpenMeteoProvider(params['latitude'], params['longitude']);
+  static fromParams(_: object, location?: Location): Provider | null {
+    if (location === undefined) return null;
+    return new OpenMeteoProvider(location);
   }
 }

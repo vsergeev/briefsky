@@ -1,4 +1,5 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
+import type { Location } from './Location';
 import { ConditionsIcon } from './Provider';
 
 const CONDITIONS_ICON_MAP: { [key: string]: ConditionsIcon } = {
@@ -18,29 +19,24 @@ export class PirateWeatherProvider implements Provider {
   static id = 'pirateweather';
   static description = 'Pirate Weather';
   static attribution = 'https://pirateweather.net/';
-  static fields = [
-    { name: 'api_key', description: 'API Key' },
-    { name: 'latitude', description: 'Latitude (decimal)' },
-    { name: 'longitude', description: 'Longitude (decimal)' },
-  ];
+  static requiresLocation = true;
+  static fields = [{ name: 'api_key', description: 'API Key' }];
 
   static ENDPOINT_URL = 'https://api.pirateweather.net/forecast';
 
   api_key: string;
-  latitude: string;
-  longitude: string;
+  location: Location;
 
-  constructor(api_key: string, latitude: string, longitude: string) {
+  constructor(api_key: string, location: Location) {
     this.api_key = api_key;
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.location = location;
   }
 
   async fetch(): Promise<Weather> {
     let response: Response;
     try {
       response = await fetch(
-        `${PirateWeatherProvider.ENDPOINT_URL}/${this.api_key}/${this.latitude},${this.longitude}?` +
+        `${PirateWeatherProvider.ENDPOINT_URL}/${this.api_key}/${this.location.latitude},${this.location.longitude}?` +
           new URLSearchParams({ exclude: 'minutely', units: 'si', extend: 'hourly' })
       );
     } catch (e) {
@@ -121,8 +117,8 @@ export class PirateWeatherProvider implements Provider {
     };
   }
 
-  static fromParams(params: object): Provider | null {
-    if (params['api_key'] === undefined || params['latitude'] === undefined || params['longitude'] === undefined) return null;
-    return new PirateWeatherProvider(params['api_key'], params['latitude'], params['longitude']);
+  static fromParams(params: object, location?: Location): Provider | null {
+    if (params['api_key'] === undefined || location === undefined) return null;
+    return new PirateWeatherProvider(params['api_key'], location);
   }
 }

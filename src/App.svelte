@@ -57,7 +57,7 @@
     }
 
     /* Instantiate provider */
-    provider = $configuration.providerFactory.fromParams($configuration.providerParams) || new ExampleProvider();
+    provider = $configuration.providerFactory.fromParams($configuration.providerParams, $configuration.location) || new ExampleProvider();
 
     /* Fetch weather */
     await refresh();

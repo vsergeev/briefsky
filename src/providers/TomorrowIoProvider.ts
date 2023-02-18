@@ -1,4 +1,5 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
+import type { Location } from './Location';
 import { ConditionsIcon } from './Provider';
 
 const CONDITIONS_TEXT_MAP: { [key: string]: string } = {
@@ -57,11 +58,8 @@ export class TomorrowIoProvider implements Provider {
   static id = 'tomorrowio';
   static description = 'Tomorrow.io';
   static attribution = 'https://www.tomorrow.io/';
-  static fields = [
-    { name: 'api_key', description: 'API Key' },
-    { name: 'latitude', description: 'Latitude (decimal)' },
-    { name: 'longitude', description: 'Longitude (decimal)' },
-  ];
+  static requiresLocation = true;
+  static fields = [{ name: 'api_key', description: 'API Key' }];
 
   static ENDPOINT_URL = 'https://api.tomorrow.io/v4/timelines';
   static FIELDS = [
@@ -83,13 +81,11 @@ export class TomorrowIoProvider implements Provider {
   ];
 
   apiKey: string;
-  latitude: string;
-  longitude: string;
+  location: Location;
 
-  constructor(apiKey: string, latitude: string, longitude: string) {
+  constructor(apiKey: string, location: Location) {
     this.apiKey = apiKey;
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.location = location;
   }
 
   async fetch(): Promise<Weather> {
@@ -100,7 +96,7 @@ export class TomorrowIoProvider implements Provider {
           '?' +
           new URLSearchParams(
             [
-              ['location', `${this.latitude},${this.longitude}`],
+              ['location', `${this.location.latitude},${this.location.longitude}`],
               ['apikey', this.apiKey],
               ['units', 'metric'],
               ['timesteps', 'current'],
@@ -198,8 +194,8 @@ export class TomorrowIoProvider implements Provider {
     };
   }
 
-  static fromParams(params: object): Provider | null {
-    if (params['api_key'] === undefined || params['latitude'] === undefined || params['longitude'] === undefined) return null;
-    return new TomorrowIoProvider(params['api_key'], params['latitude'], params['longitude']);
+  static fromParams(params: object, location?: Location): Provider | null {
+    if (params['api_key'] === undefined || location === undefined) return null;
+    return new TomorrowIoProvider(params['api_key'], location);
   }
 }

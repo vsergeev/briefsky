@@ -1,9 +1,11 @@
 import type { Provider, Weather } from './Provider';
+import type { Location } from './Location';
 
 export class ExampleProvider implements Provider {
   static id = 'example';
   static description = 'Example';
   static attribution = undefined;
+  static requiresLocation = false;
   static fields = [];
 
   async fetch(): Promise<Weather> {
@@ -1745,7 +1747,7 @@ export class ExampleProvider implements Provider {
     };
   }
 
-  static fromParams(_: object): Provider | null {
+  static fromParams(_: object, __?: Location): Provider | null {
     return new ExampleProvider();
   }
 }

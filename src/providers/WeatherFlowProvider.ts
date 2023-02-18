@@ -1,4 +1,5 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
+import type { Location } from './Location';
 import { ConditionsIcon } from './Provider';
 
 const CONDITIONS_ICON_MAP: { [key: string]: ConditionsIcon } = {
@@ -27,6 +28,7 @@ export class WeatherFlowProvider implements Provider {
   static id = 'weatherflow';
   static description = 'WeatherFlow';
   static attribution = 'https://weatherflow.com/';
+  static requiresLocation = false;
   static fields = [
     { name: 'api_key', description: 'API Key' },
     { name: 'station_id', description: 'Station ID' },
@@ -113,7 +115,7 @@ export class WeatherFlowProvider implements Provider {
     };
   }
 
-  static fromParams(params: object): Provider | null {
+  static fromParams(params: object, _?: Location): Provider | null {
     if (params['api_key'] === undefined || params['station_id'] === undefined) return null;
     return new WeatherFlowProvider(params['api_key'], params['station_id']);
   }
