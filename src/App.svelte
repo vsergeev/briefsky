@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { Alert, Navbar, Button, FooterIcon, DarkMode, Accordion, AccordionItem, Popover, Progressbar } from 'flowbite-svelte';
+  import { Alert, Navbar, Button, FooterIcon, DarkMode, Accordion, AccordionItem, Popover, Progressbar, Skeleton, ListPlaceholder } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
 
   import type { ProviderFactory, Provider, Weather } from './providers/Provider';
@@ -135,6 +135,13 @@
         <span slot="icon"><Icon icon="mdi:error-outline" class="text-2xl" /></span>
         <span class="font-semibold">Error fetching weather: </span>{error}
       </Alert>
+    {:else}
+      <div class="my-6">
+        <Skeleton class="mx-auto !max-w-full !w-3/4" />
+      </div>
+      <div class="my-6">
+        <ListPlaceholder class="mx-auto !max-w-full !w-full" />
+      </div>
     {/if}
 
     <div class="grid place-items-center my-4">
