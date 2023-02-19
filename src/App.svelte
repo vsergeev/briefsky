@@ -5,6 +5,7 @@
   import Icon from '@iconify/svelte';
 
   import type { ProviderFactory, Provider, Weather } from './providers/Provider';
+  import { Location } from './providers/Location';
   import { ExampleProvider } from './providers/ExampleProvider';
   import { configuration } from './Configuration';
 
@@ -56,8 +57,11 @@
       document.title = `briefsky - ${$configuration.title}`;
     }
 
+    /* Get location if required */
+    const location = ($configuration.providerFactory.requiresLocation && ($configuration.location || (await Location.fromGeolocation()))) || undefined;
+
     /* Instantiate provider */
-    provider = $configuration.providerFactory.fromParams($configuration.providerParams, $configuration.location) || new ExampleProvider();
+    provider = $configuration.providerFactory.fromParams($configuration.providerParams, location) || new ExampleProvider();
 
     /* Fetch weather */
     await refresh();

@@ -6,8 +6,13 @@
   import { Location } from './providers/Location';
   import { Units, decodeConfiguration, encodeConfiguration } from './Configuration';
 
-  import { Modal, Label, Select, Input, Hr, Button, ButtonGroup, Spinner } from 'flowbite-svelte';
+  import { Modal, Label, Select, Input, Hr, Button, ButtonGroup, Spinner, Radio } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
+
+  enum LocationMode {
+    Geolocation,
+    Coordinates,
+  }
 
   /* State */
   let modalOpen = false;
@@ -16,6 +21,7 @@
   /* Settings State */
   let providerFactory: ProviderFactory | undefined;
   let providerParams: object = {};
+  let locationMode: LocationMode;
   let location: Location;
   let units: Units;
   let title: string;
@@ -37,6 +43,7 @@
     currentConfiguration = decodeConfiguration(urlParams);
 
     providerFactory = ProviderFactories.includes(currentConfiguration.providerFactory) ? currentConfiguration.providerFactory : undefined;
+    locationMode = currentConfiguration.location ? LocationMode.Coordinates : LocationMode.Geolocation;
     location = currentConfiguration.location || new Location('', '');
     units = currentConfiguration.units;
     title = currentConfiguration.title;
@@ -61,7 +68,7 @@
     let configuration: Configuration = {
       providerFactory,
       providerParams,
-      location: providerFactory.requiresLocation && location.valid() ? location : undefined,
+      location: (providerFactory.requiresLocation && locationMode === LocationMode.Coordinates && location.valid() && location) || undefined,
       units,
       title,
       refreshInterval,
@@ -71,7 +78,10 @@
   }
 
   $: {
-    valid = providerFactory !== null && Object.values(providerParams).every((e) => e !== '') && (!providerFactory.requiresLocation || location.valid());
+    valid =
+      providerFactory &&
+      Object.values(providerParams).every((e) => e !== '') &&
+      (!providerFactory.requiresLocation || locationMode === LocationMode.Geolocation || location.valid());
   }
 </script>
 
@@ -101,11 +111,27 @@
 
     {#if providerFactory.requiresLocation}
       <div>
-        <Label for="group-location" class="mb-2">Location</Label>
+        <Label for="radio-location-mode" class="mb-2">Location</Label>
+        <div class="flex gap-4 ml-2 my-5">
+          <Radio id="radio-location-mode" bind:group={locationMode} value={LocationMode.Geolocation}>Geolocation</Radio>
+          <Radio bind:group={locationMode} value={LocationMode.Coordinates}>Coordinates</Radio>
+        </div>
+      </div>
+
+      <div>
+        <Label for="group-location" class="mb-2">Coordinates</Label>
         <ButtonGroup id="group-location" class="w-full">
-          <Input id="input-latitude" bind:value={location.latitude} placeholder="Latitude (decimal)" />
-          <Input id="input-longitude" bind:value={location.longitude} placeholder="Longitude (decimal)" />
-          <Button id="btn-locate" on:click={handleLocate} disabled={locationLoading} size="sm" outline class="!p-3" color="light">
+          <Input id="input-latitude" bind:value={location.latitude} disabled={locationMode === LocationMode.Geolocation} placeholder="Latitude (decimal)" />
+          <Input id="input-longitude" bind:value={location.longitude} disabled={locationMode === LocationMode.Geolocation} placeholder="Longitude (decimal)" />
+          <Button
+            id="btn-locate"
+            on:click={handleLocate}
+            disabled={locationMode === LocationMode.Geolocation || locationLoading}
+            size="sm"
+            outline
+            class="!p-3"
+            color="light"
+          >
             {#if locationLoading}
               <Spinner size="5" color="gray" />
             {:else}
