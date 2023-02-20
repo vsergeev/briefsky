@@ -2,7 +2,7 @@ import { readable } from 'svelte/store';
 
 import type { ProviderFactory } from './providers/Provider';
 import { Location } from './providers/Location';
-import { ExampleProvider } from './providers/ExampleProvider';
+import { OpenMeteoProvider } from './providers/OpenMeteoProvider';
 import { ProviderFactories } from './providers';
 
 export enum Units {
@@ -20,7 +20,7 @@ export interface Configuration {
 }
 
 const DEFAULT_CONFIGURATION: Configuration = {
-  providerFactory: ExampleProvider,
+  providerFactory: OpenMeteoProvider,
   providerParams: {},
   location: undefined,
   units: new Intl.Locale(window.navigator.language).region === 'US' ? Units.Imperial : Units.Metric,
