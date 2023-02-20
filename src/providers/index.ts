@@ -1,18 +1,18 @@
 import type { ProviderFactory } from './Provider';
 
 /* Providers */
-import { ExampleProvider } from './ExampleProvider';
-import { WeatherFlowProvider } from './WeatherFlowProvider';
+import { OpenMeteoProvider } from './OpenMeteoProvider';
 import { VisualCrossingProvider } from './VisualCrossingProvider';
 import { TomorrowIoProvider } from './TomorrowIoProvider';
-import { OpenMeteoProvider } from './OpenMeteoProvider';
 import { PirateWeatherProvider } from './PirateWeatherProvider';
+import { WeatherFlowProvider } from './WeatherFlowProvider';
+import { ExampleProvider } from './ExampleProvider';
 
 export const ProviderFactories: ProviderFactory[] = [
-  ExampleProvider,
-  WeatherFlowProvider,
+  OpenMeteoProvider,
   VisualCrossingProvider,
   TomorrowIoProvider,
-  OpenMeteoProvider,
   PirateWeatherProvider,
+  WeatherFlowProvider,
+  ExampleProvider,
 ];
