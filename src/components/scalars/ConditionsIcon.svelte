@@ -20,9 +20,22 @@
     [ConditionsIcon.Thunderstorm]: 'wi:thunderstorm',
     [ConditionsIcon.Unknown]: 'wi:na',
   };
+
+  /* Adjustments to make weather icons vertically aligned with each other */
+  const ICON_ADJUSTMENT_MAP = {
+    'wi:day-cloudy': size === 'small' ? 'top-0.5' : 'top-2',
+    'wi:fog': size === 'small' ? '-top-0.5' : '-top-2',
+    'wi:showers': size === 'small' ? '-top-0.5' : '-top-2',
+    'wi:rain': size === 'small' ? '-top-0.5' : '-top-2',
+    'wi:sleet': size === 'small' ? '-top-0.5' : '-top-2',
+    'wi:snow': size === 'small' ? '-top-0.5' : '-top-2',
+    'wi:thunderstorm': size === 'small' ? '-top-0.5' : '-top-2',
+  };
+
+  const icon = ICON_MAP[value] ?? ICON_MAP[ConditionsIcon.Unknown];
 </script>
 
 <Icon
-  icon={ICON_MAP[value] ?? ICON_MAP[ConditionsIcon.Unknown]}
-  class={size === 'small' ? 'text-[30px] sm:text-[36px] -mt-1.5 -mb-1.5' : 'text-[96px] sm:text-[112px] -mt-6 -mb-6'}
+  {icon}
+  class={`relative ${ICON_ADJUSTMENT_MAP[icon] ?? ''} ` + (size === 'small' ? 'text-[30px] sm:text-[36px] -my-1.5' : 'text-[96px] sm:text-[112px] -my-6')}
 />
