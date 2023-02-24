@@ -1,47 +1,94 @@
-# Svelte + TS + Vite
+# briefsky
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+briefsky is a free weather frontend to a variety of weather providers, with an interface reminiscent of the late Dark Sky.
 
-## Recommended IDE Setup
+briefsky supports the following weather providers:
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- [Open-Meteo](https://open-meteo.com) (default)
+- [Visual Crossing](https://www.visualcrossing.com/)
+- [Tomorrow.io](https://www.tomorrow.io/)
+- [Pirate Weather](https://pirateweather.net/)
+- [WeatherFlow](https://weatherflow.com/)
 
-## Need an official Svelte framework?
+Some weather providers may require a free API key.
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+## Building
 
-## Technical considerations
+Install packages:
 
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store';
-export default writable(0);
 ```
+$ npm install
+```
+
+Run local development server:
+
+```
+$ npm run dev
+```
+
+Build production bundle:
+
+```
+$ npm run build
+```
+
+Preview production bundle:
+
+```
+$ npm run preview
+```
+
+Format, lint, and check:
+
+```
+$ npm run format && npm run lint && npm run check
+```
+
+## Unsupported Providers
+
+briefsky strives to support free weather providers with open APIs or with free
+API keys. However, some providers are missing weather data needed by the
+frontend, or lack sufficient weather data with a free API key. Below is a list
+of currently unsupported weather providers:
+
+- [National Weather Service](https://www.weather.gov/documentation/services-web-api)
+  - Missing usable condition icons
+  - Missing sunrise/sunset data
+- [OpenWeather](https://openweathermap.org/api)
+  - Missing free daily forecast in standard API
+  - Missing sufficient free hourly forecast in one Call API (only 48 hours free)
+- [Meteomatics](https://www.meteomatics.com/en/weather-api/)
+  - Does not support CORS
+  - Missing apparent temperature, humidity, and dewpoint in free parameters
+- [Weatherbit](https://www.weatherbit.io/)
+  - Missing free hourly forecast
+- [Weatherstack](https://weatherstack.com/)
+  - Missing free daily and hourly forecast
+- [Accuweather](https://developer.accuweather.com/)
+  - Missing sufficient free hourly forecast (only 12 hours free)
+- [Stormglass.io](https://stormglass.io/)
+  - Does not provide daily forecast
+
+## File Structure
+
+- [src/](src/) - Sources
+  - [components/](src/components/) - Components
+    - [scalars/](src/components/scalars/) - Scalars
+  - [providers/](src/providers/) - Weather Providers
+- [public/](public/) - Static assets
+- [index.html](index.html) - Top-level HTML
+- [package.json](package.json) - npm package configuration
+- [package-lock.json](package-lock.json) - npm package lock
+- [tsconfig.json](tsconfig.json) - TypeScript (Web) configuration
+- [tsconfig.node.json](tsconfig.node.json) - TypeScript (Node) configuration
+- [vite.config.ts](vite.config.ts) - Vite configuration
+- [svelte.config.js](svelte.config.js) - Svelte configuration
+- [postcss.config.cjs](postcss.config.cjs) - PostCSS configuration
+- [tailwind.config.cjs](tailwind.config.cjs) - Tailwind configuration
+- [CHANGELOG](CHANGELOG.md) - Change log
+- [LICENSE](LICENSE) - MIT License
+- [README.md](README.md) - This README
+
+## License
+
+briefsky is MIT licensed. See the included [LICENSE](LICENSE) file.
