@@ -31,6 +31,10 @@
         href="https://github.com/Richard9394/MingCute/blob/main/LICENSE">Apache 2.0 License</a
       >).
     </p>
+    <br />
+    <p>
+      <span class="font-mono">v{window.__APP_VERSION__}-{window.__APP_COMMIT_ID__}</span>
+    </p>
   </div>
 
   <svelte:fragment slot="footer">
