@@ -49,7 +49,8 @@
   }
 
   onMount(async () => {
-    /* Log configuration */
+    /* Log version and configuration */
+    console.log('briefsky version', `v${window.__APP_VERSION__}-${window.__APP_COMMIT_ID__}`);
     console.log('Configuration', $configuration);
 
     /* Update page title */
