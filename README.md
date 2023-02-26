@@ -1,14 +1,21 @@
 # briefsky
 
-briefsky is a free weather frontend to a variety of weather providers, with an interface reminiscent of the late Dark Sky.
+[briefsky](https://briefsky.app/) is a free weather frontend to a variety of
+weather providers, with an interface reminiscent of the late [Dark
+Sky](https://darksky.net/).
 
-briefsky supports the following weather providers:
+briefsky retains all configuration in URL parameters, so you can bookmark
+multiple locations or weather providers. briefsky is implemented as a
+client-side app. It doesn't collect user information, show ads, or store
+cookies.
+
+briefsky currently supports the following weather providers:
 
 - [Open-Meteo](https://open-meteo.com) (default)
 - [Visual Crossing](https://www.visualcrossing.com/)
 - [Tomorrow.io](https://www.tomorrow.io/)
 - [Pirate Weather](https://pirateweather.net/)
-- [WeatherFlow](https://weatherflow.com/)
+- [WeatherFlow Tempest](https://weatherflow.github.io/Tempest/)
 
 Some weather providers may require a free API key.
 
@@ -56,10 +63,11 @@ of currently unsupported weather providers:
   - Missing sunrise/sunset data
 - [OpenWeather](https://openweathermap.org/api)
   - Missing free daily forecast in standard API
-  - Missing sufficient free hourly forecast in one Call API (only 48 hours free)
+  - Missing sufficient free hourly forecast in One Call API (only 48 hours
+    free)
 - [Meteomatics](https://www.meteomatics.com/en/weather-api/)
   - Does not support CORS
-  - Missing apparent temperature, humidity, and dewpoint in free parameters
+  - Missing apparent temperature, humidity, and dew point in free parameters
 - [Weatherbit](https://www.weatherbit.io/)
   - Missing free hourly forecast
 - [Weatherstack](https://weatherstack.com/)
