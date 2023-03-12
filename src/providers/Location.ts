@@ -18,7 +18,7 @@ export class Location {
   static fromString(location?: string): Location | null {
     if (location === undefined) return null;
     const [latitude, longitude] = location.split(',');
-    return new Location(latitude || '', longitude || '');
+    return new Location((latitude || '').trim(), (longitude || '').trim());
   }
 
   static async fromGeolocation(): Promise<Location | null> {
