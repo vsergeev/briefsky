@@ -60,6 +60,16 @@
     locationLoading = false;
   }
 
+  function handlePaste(event: ClipboardEvent) {
+    if (locationMode !== LocationMode.Coordinates) return;
+
+    const decodedLocation = Location.fromString(event.clipboardData.getData('text'));
+    if (decodedLocation.valid()) {
+      location = decodedLocation;
+      event.preventDefault();
+    }
+  }
+
   function handleClose() {
     modalOpen = false;
   }
@@ -118,7 +128,7 @@
         </div>
       </div>
 
-      <div>
+      <div on:paste={handlePaste}>
         <Label for="group-location" class="mb-2">Coordinates</Label>
         <ButtonGroup id="group-location" class="w-full">
           <Input id="input-latitude" bind:value={location.latitude} disabled={locationMode === LocationMode.Geolocation} placeholder="Latitude (decimal)" />
