@@ -15,6 +15,7 @@ export interface Configuration {
   providerParams: object;
   location: Location | undefined;
   units: Units;
+  layout: string;
   title: string;
   refreshInterval: number;
 }
@@ -24,6 +25,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   providerParams: {},
   location: undefined,
   units: new Intl.Locale(window.navigator.language).region === 'US' ? Units.Imperial : Units.Metric,
+  layout: 'horizontal',
   title: '',
   refreshInterval: 2 * 3600,
 };
@@ -32,6 +34,7 @@ export function decodeConfiguration(params: object): Configuration {
   const providerFactory = ProviderFactories.find((e) => e.id === params['provider']) || DEFAULT_CONFIGURATION.providerFactory;
   const providerParams = Object.fromEntries(providerFactory.fields.map((f: { name: string }) => [f.name, params[f.name] || undefined]));
   const location = Location.fromString(params['location']) || DEFAULT_CONFIGURATION.location;
+  const layout = params['layout'] || DEFAULT_CONFIGURATION.layout;
   const title = params['title'] || DEFAULT_CONFIGURATION.title;
   const units = params['units'] === 'metric' ? Units.Metric : params['units'] === 'imperial' ? Units.Imperial : DEFAULT_CONFIGURATION.units;
   const refreshInterval = parseInt(params['refresh_interval']) || DEFAULT_CONFIGURATION.refreshInterval;
@@ -40,6 +43,7 @@ export function decodeConfiguration(params: object): Configuration {
     providerFactory,
     providerParams,
     location,
+    layout,
     title,
     units,
     refreshInterval,
@@ -63,6 +67,9 @@ export function encodeConfiguration(configuration: Configuration): object {
   }
   if (configuration.title !== DEFAULT_CONFIGURATION.title) {
     params['title'] = configuration.title;
+  }
+  if (configuration.layout !== DEFAULT_CONFIGURATION.layout) {
+    params['layout'] = configuration.layout;
   }
   if (configuration.refreshInterval !== DEFAULT_CONFIGURATION.refreshInterval) {
     params['refresh_interval'] = configuration.refreshInterval;

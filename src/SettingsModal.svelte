@@ -27,6 +27,7 @@
   let title: string;
   let refreshInterval: number;
   let valid: boolean;
+  let layout: string;
 
   /* Loading State for location */
   let locationLoading: boolean = false;
@@ -46,6 +47,7 @@
     locationMode = currentConfiguration.location ? LocationMode.Coordinates : LocationMode.Geolocation;
     location = currentConfiguration.location || new Location('', '');
     units = currentConfiguration.units;
+    layout = currentConfiguration.layout;
     title = currentConfiguration.title;
     refreshInterval = currentConfiguration.refreshInterval;
 
@@ -80,6 +82,7 @@
       providerParams,
       location: (providerFactory.requiresLocation && locationMode === LocationMode.Coordinates && location.valid() && location) || undefined,
       units,
+      layout,
       title,
       refreshInterval,
     };
@@ -161,6 +164,18 @@
           { name: 'Metric', value: Units.Metric },
         ]}
         bind:value={units}
+      />
+    </div>
+
+    <div>
+      <Label for="select-layout" class="mb-2">Layout</Label>
+      <Select
+        id="select-layout"
+        items={[
+          { name: 'Horizontal', value: 'horizontal' },
+          { name: 'Vertical', value: 'vertial' },
+        ]}
+        bind:value={layout}
       />
     </div>
 
