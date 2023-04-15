@@ -173,7 +173,7 @@
         id="select-layout"
         items={[
           { name: 'Horizontal', value: 'horizontal' },
-          { name: 'Vertical', value: 'vertial' },
+          { name: 'Vertical', value: 'vertical' },
         ]}
         bind:value={layout}
       />

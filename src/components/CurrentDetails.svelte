@@ -1,5 +1,7 @@
 <script lang="ts">
-  import type { CurrentWeather } from '../providers/Provider';
+  import Icon from '@iconify/svelte';
+
+  import type { CurrentWeather, SunTimes } from '../providers/Provider';
 
   import Conditions from './scalars/Conditions.svelte';
   import ConditionsIcon from './scalars/ConditionsIcon.svelte';
@@ -9,13 +11,15 @@
   import UVIndex from './scalars/UVIndex.svelte';
   import Distance from './scalars/Distance.svelte';
   import Pressure from './scalars/Pressure.svelte';
+  import Timestamp from './scalars/Timestamp.svelte';
 
   export let current: CurrentWeather;
+  export let suntimes: SunTimes;
 </script>
 
-<div class="grid grid-rows-2 grid-flow-col justify-center items-center mt-2 mb-4">
-  <div class="row-span-2 mr-2"><ConditionsIcon size="large" value={current.conditions_icon} /></div>
-  <div><span class="text-2xl sm:text-4xl font-semibold"><Temperature value={current.temperature} /> <Conditions value={current.conditions} /></span></div>
+<div class="grid grid-rows-2 grid-flow-col items-center mt-2 mb-4">
+  <div class="row-span-2 ml-3"><ConditionsIcon size="large" value={current.conditions_icon} /></div>
+  <div class="mr-[110px]"><span class="text-2xl sm:text-4xl font-semibold"><Temperature value={current.temperature} /> <Conditions value={current.conditions} /></span></div>
   <div class="flex gap-2">
     <div><span class="font-semibold">Feels Like: </span><Temperature value={current.feels_like_temperature} /></div>
     <div><span class="font-semibold">Low: </span><Temperature value={current.temperature_low} /></div>
@@ -23,7 +27,7 @@
   </div>
 </div>
 
-<div class="grid grid-cols-2 md:grid-cols-none md:grid-flow-col place-items-center md:justify-center gap-2 md:gap-8 md:mx-0 mb-6">
+<div class="grid grid-cols-2 md:grid-cols-none md:grid-flow-col md:place-items-center md:justify-center gap-2 md:gap-8 md:mx-0 mx-6 mt-6 mb-10">
   <div><span class="font-semibold">Wind: </span><Wind speed={current.wind_speed} direction={current.wind_direction} /></div>
   <div><span class="font-semibold">Humidity: </span><RelativeHumidity value={current.relative_humidity} /></div>
   <div><span class="font-semibold">Dew Point: </span><Temperature value={current.dew_point_temperature} /></div>
@@ -34,4 +38,13 @@
     <div><span class="font-semibold">Visibility: </span><Distance value={current.visibility} /></div>
   {/if}
   <div><span class="font-semibold">Pressure: </span><Pressure value={current.pressure} /></div>
+  <div>
+    <span class="inline-block" style="transform:translate(-2px,-2px)"><Icon icon="mingcute:sunrise-line" class="inline text-2xl sm:text-3xl align-bottom" /></span>
+    <span class="font-semibold">Sunrise: </span><Timestamp format="short" value={suntimes.sunrise_timestamp} />
+  </div>
+  <div>
+    <span class="inline-block" style="transform:translate(-2px,-2px)"><Icon icon="mingcute:sunset-fill" class="inline text-2xl sm:text-3xl align-bottom" /></span>
+    <span class="font-semibold">Sunset: </span><Timestamp format="short" value={suntimes.sunset_timestamp} />
+  </div>
+
 </div>

@@ -74,6 +74,11 @@ export interface ProviderFactory {
   fromParams(params: object, location?: Location): Provider | null;
 }
 
+export interface SunTimes {
+  sunrise_timestamp: Date;
+  sunset_timestamp: Date;
+}
+
 export interface Provider {
   fetch(): Promise<Weather>;
 }

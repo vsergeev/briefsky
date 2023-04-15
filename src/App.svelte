@@ -110,9 +110,10 @@
 
   <div class="container mx-auto">
     {#if weather}
-      <CurrentDetails current={weather.current} />
+      {@const { sunset_timestamp, sunrise_timestamp } = weather.daily[0]}
+      <CurrentDetails current={weather.current} suntimes={{ sunset_timestamp, sunrise_timestamp }} />
       <div class="mx-6 mb-6">
-        <HourlyDetails hourly={weather.current.hourly} />
+        <HourlyDetails hourly={weather.current.hourly} today />
       </div>
       <Accordion
         multiple
@@ -120,19 +121,21 @@
         inactiveClasses="hover:bg-gray-100 hover:dark:bg-gray-700"
         defaultClass="mx-2 sm:mx-0"
       >
-        {#each weather.daily as daily}
-          <AccordionItem class="!p-2 md:!p-4">
-            <span slot="header" class="w-full">
-              <DailySummary
-                current={weather.current}
-                {daily}
-                global_low={Math.min(...weather.daily.map((d) => d.temperature_low))}
-                global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
-              />
-            </span>
-            <DailyDetails {daily} />
-            <HourlyDetails hourly={daily.hourly} />
-          </AccordionItem>
+        {#each weather.daily as daily, i}
+          {#if ($configuration.layout === 'vertical' && i) > 0 || $configuration.layout === 'horizontal'}
+            <AccordionItem class="!px-2 md:!px-4 py-4 md:px-8">
+              <span slot="header" class="w-full">
+                <DailySummary
+                  current={weather.current}
+                  {daily}
+                  global_low={Math.min(...weather.daily.map((d) => d.temperature_low))}
+                  global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
+                />
+              </span>
+              <DailyDetails {daily} />
+              <HourlyDetails hourly={daily.hourly} />
+            </AccordionItem>
+          {/if}
         {/each}
       </Accordion>
     {:else if error}
