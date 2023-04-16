@@ -16,6 +16,7 @@
   import HourlyDetails from './components/HourlyDetails.svelte';
   import SettingsModal from './SettingsModal.svelte';
   import AboutModal from './AboutModal.svelte';
+    import Precipitation from './components/scalars/Precipitation.svelte';
 
   /* Constants */
   const navbarButtonClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5';
@@ -110,8 +111,8 @@
 
   <div class="container mx-auto">
     {#if weather}
-      {@const { sunset_timestamp, sunrise_timestamp } = weather.daily[0]}
-      <CurrentDetails current={weather.current} suntimes={{ sunset_timestamp, sunrise_timestamp }} />
+      {@const { sunset_timestamp, sunrise_timestamp, precipitation_amount, precipitation_probability } = weather.daily[0]}
+      <CurrentDetails current={weather.current} suntimes={{ sunset_timestamp, sunrise_timestamp }} precipitation={{ precipitation_probability, precipitation_amount }} />
       <div class="mx-6 mb-6">
         <HourlyDetails hourly={weather.current.hourly} today />
       </div>
@@ -132,7 +133,7 @@
                   global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
                 />
               </span>
-              <DailyDetails {daily} />
+              <DailyDetails {daily} suntimes={{ sunset_timestamp, sunrise_timestamp }}/>
               <HourlyDetails hourly={daily.hourly} />
             </AccordionItem>
           {/if}

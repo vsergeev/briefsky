@@ -78,6 +78,10 @@ export interface SunTimes {
   sunrise_timestamp: Date;
   sunset_timestamp: Date;
 }
+export interface DailyPrecipitation {
+  precipitation_probability?: number; // in integral percent 0-100
+  precipitation_amount?: number; // in mm
+}
 
 export interface Provider {
   fetch(): Promise<Weather>;
