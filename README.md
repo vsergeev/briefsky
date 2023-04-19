@@ -1,4 +1,4 @@
-# briefsky
+# briefsky [![GitHub release](https://img.shields.io/github/release/vsergeev/briefsky.svg?maxAge=7200)](https://github.com/vsergeev/briefsky) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/vsergeev/briefsky/blob/master/LICENSE)
 
 [briefsky](https://briefsky.app/) is a free weather frontend to a variety of
 weather providers, with an interface reminiscent of the late [Dark
