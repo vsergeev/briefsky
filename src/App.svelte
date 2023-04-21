@@ -7,7 +7,7 @@
   import type { ProviderFactory, Provider, Weather } from './providers/Provider';
   import { Location } from './providers/Location';
   import { ExampleProvider } from './providers/ExampleProvider';
-  import { configuration } from './Configuration';
+  import { AutoExpand, configuration } from './Configuration';
 
   import Timestamp from './components/scalars/Timestamp.svelte';
   import CurrentDetails from './components/CurrentDetails.svelte';
@@ -120,8 +120,11 @@
         inactiveClasses="hover:bg-gray-100 hover:dark:bg-gray-700"
         defaultClass="mx-2 sm:mx-0"
       >
-        {#each weather.daily as daily}
-          <AccordionItem class="!p-2 md:!p-4">
+        {#each weather.daily as daily, i}
+          <AccordionItem
+            class="!p-2 md:!p-4"
+            open={$configuration.autoexpand === AutoExpand.All || (i === 0 && $configuration.autoexpand === AutoExpand.Today)}
+          >
             <span slot="header" class="w-full">
               <DailySummary
                 current={weather.current}

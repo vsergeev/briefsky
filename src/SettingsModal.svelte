@@ -4,7 +4,7 @@
 
   import { ProviderFactories } from './providers';
   import { Location } from './providers/Location';
-  import { Units, decodeConfiguration, encodeConfiguration } from './Configuration';
+  import { Units, AutoExpand, decodeConfiguration, encodeConfiguration } from './Configuration';
 
   import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Button, ButtonGroup, Spinner, Radio } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
@@ -24,6 +24,7 @@
   let locationMode: LocationMode;
   let location: Location;
   let units: Units;
+  let autoexpand: AutoExpand;
   let title: string;
   let refreshInterval: number;
   let valid: boolean;
@@ -46,6 +47,7 @@
     locationMode = currentConfiguration.location ? LocationMode.Coordinates : LocationMode.Geolocation;
     location = currentConfiguration.location || new Location('', '');
     units = currentConfiguration.units;
+    autoexpand = currentConfiguration.autoexpand;
     title = currentConfiguration.title;
     refreshInterval = currentConfiguration.refreshInterval;
 
@@ -80,6 +82,7 @@
       providerParams,
       location: (providerFactory.requiresLocation && locationMode === LocationMode.Coordinates && location.valid() && location) || undefined,
       units,
+      autoexpand,
       title,
       refreshInterval,
     };
@@ -183,7 +186,22 @@
           </div>
         </div>
       </TabItem>
-      <TabItem title="View" />
+      <TabItem title="View">
+        <div class="space-y-4">
+          <div>
+            <Label for="select-autoexpand" class="mb-2">Auto-Expand</Label>
+            <Select
+              id="select-autoexpand"
+              items={[
+                { name: 'Today', value: AutoExpand.Today },
+                { name: 'All', value: AutoExpand.All },
+                { name: 'None', value: AutoExpand.None },
+              ]}
+              bind:value={autoexpand}
+            />
+          </div>
+        </div>
+      </TabItem>
     </Tabs>
   </div>
 
