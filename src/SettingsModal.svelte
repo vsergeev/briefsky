@@ -26,7 +26,6 @@
   let units: Units;
   let autoexpand: AutoExpand;
   let title: string;
-  let refreshInterval: number;
   let valid: boolean;
 
   /* Loading State for location */
@@ -49,7 +48,6 @@
     units = currentConfiguration.units;
     autoexpand = currentConfiguration.autoexpand;
     title = currentConfiguration.title;
-    refreshInterval = currentConfiguration.refreshInterval;
 
     updateProviderParams();
 
@@ -84,7 +82,7 @@
       units,
       autoexpand,
       title,
-      refreshInterval,
+      refreshInterval: currentConfiguration.refreshInterval,
     };
 
     window.location.search = new URLSearchParams(encodeConfiguration(configuration) as Record<string, string>).toString();
