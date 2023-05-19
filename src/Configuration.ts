@@ -36,7 +36,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   refreshInterval: 2 * 3600,
 };
 
-export function decodeConfiguration(params: object): Configuration {
+function decodeConfiguration(params: object): Configuration {
   const providerFactory = ProviderFactories.find((e) => e.id === params['provider']) || DEFAULT_CONFIGURATION.providerFactory;
   const providerParams = Object.fromEntries(providerFactory.fields.map((f: { name: string }) => [f.name, params[f.name]]));
   const location = Location.fromString(params['location']) || DEFAULT_CONFIGURATION.location;
@@ -63,7 +63,7 @@ export function decodeConfiguration(params: object): Configuration {
   };
 }
 
-export function encodeConfiguration(configuration: Configuration): object {
+function encodeConfiguration(configuration: Configuration): object {
   const params = {};
 
   params['provider'] = configuration.providerFactory.id;
@@ -91,8 +91,15 @@ export function encodeConfiguration(configuration: Configuration): object {
   return params;
 }
 
+export function loadConfiguration(): Configuration {
+  return decodeConfiguration(Object.fromEntries(new URLSearchParams(window.location.search).entries()));
+}
+
+export function storeConfiguration(configuration: Configuration): void {
+  window.location.search = new URLSearchParams(encodeConfiguration(configuration) as Record<string, string>).toString();
+}
+
 export const configuration = readable(DEFAULT_CONFIGURATION, function start(set) {
-  const urlParams = Object.fromEntries(new URLSearchParams(window.location.search).entries());
-  set(decodeConfiguration(urlParams));
+  set(loadConfiguration());
   return () => {};
 });

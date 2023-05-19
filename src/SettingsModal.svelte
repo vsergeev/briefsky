@@ -4,7 +4,7 @@
 
   import { ProviderFactories } from './providers';
   import { Location } from './providers/Location';
-  import { Units, AutoExpand, decodeConfiguration, encodeConfiguration } from './Configuration';
+  import { Units, AutoExpand, loadConfiguration, storeConfiguration } from './Configuration';
 
   import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Button, ButtonGroup, Spinner, Radio } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
@@ -39,8 +39,7 @@
   }
 
   export function open() {
-    const urlParams = Object.fromEntries(new URLSearchParams(window.location.search).entries());
-    currentConfiguration = decodeConfiguration(urlParams);
+    currentConfiguration = loadConfiguration();
 
     providerFactory = ProviderFactories.includes(currentConfiguration.providerFactory) ? currentConfiguration.providerFactory : undefined;
     locationMode = currentConfiguration.location ? LocationMode.Coordinates : LocationMode.Geolocation;
@@ -85,7 +84,7 @@
       refreshInterval: currentConfiguration.refreshInterval,
     };
 
-    window.location.search = new URLSearchParams(encodeConfiguration(configuration) as Record<string, string>).toString();
+    storeConfiguration(configuration);
   }
 
   $: {
