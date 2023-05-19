@@ -5,6 +5,11 @@ import { Location } from './providers/Location';
 import { OpenMeteoProvider } from './providers/OpenMeteoProvider';
 import { ProviderFactories } from './providers';
 
+export enum StorageMode {
+  QueryString,
+  LocalStorage,
+}
+
 export enum Units {
   Imperial,
   Metric,
@@ -91,12 +96,29 @@ function encodeConfiguration(configuration: Configuration): object {
   return params;
 }
 
+export function getStorageMode(): StorageMode {
+  return new URLSearchParams(window.location.search).get('storage') === 'local' ? StorageMode.LocalStorage : StorageMode.QueryString;
+}
+
 export function loadConfiguration(): Configuration {
-  return decodeConfiguration(Object.fromEntries(new URLSearchParams(window.location.search).entries()));
+  const storageMode = getStorageMode();
+
+  if (storageMode === StorageMode.QueryString) {
+    return decodeConfiguration(Object.fromEntries(new URLSearchParams(window.location.search).entries()));
+  } else {
+    return decodeConfiguration(JSON.parse(window.localStorage.getItem('configuration')) || {});
+  }
 }
 
 export function storeConfiguration(configuration: Configuration): void {
-  window.location.search = new URLSearchParams(encodeConfiguration(configuration) as Record<string, string>).toString();
+  const storageMode = getStorageMode();
+
+  if (storageMode === StorageMode.QueryString) {
+    window.location.search = new URLSearchParams(encodeConfiguration(configuration) as Record<string, string>).toString();
+  } else {
+    window.localStorage.setItem('configuration', JSON.stringify(encodeConfiguration(configuration)));
+    window.location.search = new URLSearchParams({ storage: 'local' }).toString();
+  }
 }
 
 export const configuration = readable(DEFAULT_CONFIGURATION, function start(set) {
