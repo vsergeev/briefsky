@@ -38,7 +38,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
 
 export function decodeConfiguration(params: object): Configuration {
   const providerFactory = ProviderFactories.find((e) => e.id === params['provider']) || DEFAULT_CONFIGURATION.providerFactory;
-  const providerParams = Object.fromEntries(providerFactory.fields.map((f: { name: string }) => [f.name, params[f.name] || undefined]));
+  const providerParams = Object.fromEntries(providerFactory.fields.map((f: { name: string }) => [f.name, params[f.name]]));
   const location = Location.fromString(params['location']) || DEFAULT_CONFIGURATION.location;
   const title = params['title'] || DEFAULT_CONFIGURATION.title;
   const units = params['units'] === 'metric' ? Units.Metric : params['units'] === 'imperial' ? Units.Imperial : DEFAULT_CONFIGURATION.units;
