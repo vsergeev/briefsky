@@ -23,7 +23,9 @@
   </div>
 </div>
 
-<div class="grid grid-cols-2 md:grid-cols-none md:grid-flow-col place-items-stretch md:justify-center w-4/5 md:w-full gap-2 md:gap-8 mx-auto md:mx-0 mb-6">
+<div
+  class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-none lg:grid-flow-col place-items-stretch lg:justify-center w-4/5 lg:w-full gap-2 lg:gap-8 mx-auto lg:mx-0 mb-6"
+>
   <div><span class="font-semibold">Wind: </span><Wind speed={current.wind_speed} direction={current.wind_direction} /></div>
   <div><span class="font-semibold">Humidity: </span><RelativeHumidity value={current.relative_humidity} /></div>
   <div><span class="font-semibold">Dew Point: </span><Temperature value={current.dew_point_temperature} /></div>
