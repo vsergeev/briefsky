@@ -1,5 +1,6 @@
 <script lang="ts">
   import { configuration, Units } from '../../Configuration';
+  import Icon from '@iconify/svelte';
 
   export let speed: number = 0;
   export let direction: number = 0;
@@ -16,7 +17,15 @@
 </script>
 
 {#if $configuration.units === Units.Imperial}
-  <span>{kphToMph(speed).toFixed(0)} mph {degreesToCardinal(direction)}</span>
+  <span>{kphToMph(speed).toFixed(0)} mph {degreesToCardinal(direction)}</span><Icon
+    icon="wi:wind-deg"
+    class="inline text-xl sm:text-2xl align-bottom ml-0.5"
+    style={`transform: rotate(${(direction - 180).toFixed(0)}deg)`}
+  />
 {:else}
-  <span>{speed.toFixed(0)} km/h {degreesToCardinal(direction)}</span>
+  <span>{speed.toFixed(0)} km/h {degreesToCardinal(direction)}</span><Icon
+    icon="wi:wind-deg"
+    class="inline text-xl sm:text-2xl align-bottom ml-0.5"
+    style={`transform: rotate(${(direction - 180).toFixed(0)}deg)`}
+  />
 {/if}
