@@ -1,3 +1,7 @@
+* v1.3.0 - 06/28/2023
+    * Improve current details layout on small and medium screens.
+    * Add wind direction icon.
+
 * v1.2.0 - 05/19/2023
     * Add category tabs to Settings.
     * Add auto-expand days view option to Settings.
