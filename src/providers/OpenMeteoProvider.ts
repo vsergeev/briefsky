@@ -73,7 +73,17 @@ export class OpenMeteoProvider implements Provider {
 
   static ENDPOINT_URL = 'https://api.open-meteo.com/v1/forecast';
   static DAILY_FIELDS = ['weathercode', 'temperature_2m_max', 'temperature_2m_min', 'sunrise', 'sunset', 'precipitation_sum'];
-  static HOURLY_FIELDS = ['temperature_2m', 'relativehumidity_2m', 'dewpoint_2m', 'apparent_temperature', 'weathercode', 'pressure_msl', 'visibility'];
+  static HOURLY_FIELDS = [
+    'temperature_2m',
+    'relativehumidity_2m',
+    'dewpoint_2m',
+    'apparent_temperature',
+    'weathercode',
+    'pressure_msl',
+    'visibility',
+    'windspeed_10m',
+    'winddirection_10m',
+  ];
 
   location: Location;
 
@@ -175,6 +185,8 @@ export class OpenMeteoProvider implements Provider {
             conditions: CONDITIONS_TEXT_MAP[h.weathercode] ?? 'Unknown',
             conditions_icon: CONDITIONS_ICON_MAP[h.weathercode] ?? ConditionsIcon.Unknown,
             temperature: h.temperature_2m,
+            wind_speed: h.windspeed_10m,
+            wind_direction: h.winddirection_10m,
           })),
       }));
 
