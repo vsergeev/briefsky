@@ -109,6 +109,8 @@ export class VisualCrossingProvider implements Provider {
             conditions: h.conditions,
             conditions_icon: CONDITIONS_ICON_MAP[h.icon] ?? ConditionsIcon.Unknown,
             temperature: h.temp,
+            wind_speed: h.windspeed,
+            wind_direction: h.winddir,
           })),
       }));
 
