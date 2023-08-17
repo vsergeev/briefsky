@@ -52,6 +52,8 @@ export interface HourlyWeather {
   conditions: string;
   conditions_icon: ConditionsIcon;
   temperature: number; // in C
+  wind_speed?: number; // in km/h
+  wind_direction?: number; // in degrees 0-360
 }
 
 export interface Weather {
