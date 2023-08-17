@@ -179,6 +179,8 @@ export class TomorrowIoProvider implements Provider {
             conditions: CONDITIONS_TEXT_MAP[h.values.weatherCode] ?? 'Unknown',
             conditions_icon: CONDITIONS_ICON_MAP[h.values.weatherCode] ?? ConditionsIcon.Unknown,
             temperature: h.values.temperature,
+            wind_speed: h.values.windSpeed * (3600 / 1000),
+            wind_direction: h.values.windDirection,
           })),
       }))
       .filter((d: any) => d.hourly.length === 24);
