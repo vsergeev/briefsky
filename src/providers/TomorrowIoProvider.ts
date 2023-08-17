@@ -103,7 +103,7 @@ export class TomorrowIoProvider implements Provider {
               ['timesteps', '1d'],
               ['timesteps', '1h'],
               ['startTime', 'nowMinus6h'],
-              ['endTime', 'nowPlus11d'],
+              ['endTime', 'nowPlus5d'],
             ].concat(TomorrowIoProvider.FIELDS.map((f) => ['fields', f]))
           )
       );
