@@ -103,6 +103,8 @@ export class PirateWeatherProvider implements Provider {
             conditions: h.summary,
             conditions_icon: CONDITIONS_ICON_MAP[h.icon] ?? ConditionsIcon.Unknown,
             temperature: h.temperature,
+            wind_speed: h.windSpeed * (3600 / 1000),
+            wind_direction: h.windBearing,
           })),
       }))
       .filter((d: DailyWeather) => d.hourly.length === 24);
