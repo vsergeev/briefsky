@@ -106,6 +106,8 @@ export class WeatherFlowProvider implements Provider {
           conditions: h.conditions,
           conditions_icon: CONDITIONS_ICON_MAP[h.icon] ?? ConditionsIcon.Unknown,
           temperature: h.air_temperature,
+          wind_speed: h.wind_avg * (3600 / 1000),
+          wind_direction: h.wind_direction,
         })),
     }));
 
