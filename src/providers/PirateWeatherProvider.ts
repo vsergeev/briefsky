@@ -37,7 +37,7 @@ export class PirateWeatherProvider implements Provider {
     try {
       response = await fetch(
         `${PirateWeatherProvider.ENDPOINT_URL}/${this.api_key}/${this.location.latitude},${this.location.longitude}?` +
-          new URLSearchParams({ exclude: 'minutely', units: 'si', extend: 'hourly' })
+          new URLSearchParams({ exclude: 'minutely', units: 'si', extend: 'hourly' }),
       );
     } catch (e) {
       throw new Error(`Fetching from Pirate Weather: ${e.toString()}`);

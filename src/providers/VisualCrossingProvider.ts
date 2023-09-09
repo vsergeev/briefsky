@@ -45,7 +45,7 @@ export class VisualCrossingProvider implements Provider {
         VisualCrossingProvider.ENDPOINT_URL +
           encodeURIComponent(`${this.location.latitude},${this.location.longitude}`) +
           '?' +
-          new URLSearchParams({ unitGroup: 'metric', key: this.apiKey, iconSet: 'icons2' })
+          new URLSearchParams({ unitGroup: 'metric', key: this.apiKey, iconSet: 'icons2' }),
       );
     } catch (e) {
       throw new Error(`Fetching from Visual Crossing: ${e.toString()}`);

@@ -33,7 +33,7 @@ export class Location {
           console.error(`Error getting geolocation: ${error.message} (${error.code})`);
           resolve(null);
         },
-        { timeout: 10 * 1000 }
+        { timeout: 10 * 1000 },
       );
     });
   }

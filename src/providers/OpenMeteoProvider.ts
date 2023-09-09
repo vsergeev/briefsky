@@ -112,8 +112,8 @@ export class OpenMeteoProvider implements Provider {
               ['current_weather', 'true'],
             ]
               .concat(OpenMeteoProvider.DAILY_FIELDS.map((f) => ['daily', f]))
-              .concat(OpenMeteoProvider.HOURLY_FIELDS.map((f) => ['hourly', f]))
-          )
+              .concat(OpenMeteoProvider.HOURLY_FIELDS.map((f) => ['hourly', f])),
+          ),
       );
     } catch (e) {
       throw new Error(`Fetching from Open-Meteo: ${e.toString()}`);
@@ -132,10 +132,10 @@ export class OpenMeteoProvider implements Provider {
     }
 
     const dailyData = Array.from(Array(data.daily.time.length).keys()).map((i) =>
-      Object.fromEntries(Object.keys(data.daily).map((k) => [k, data.daily[k][i]]))
+      Object.fromEntries(Object.keys(data.daily).map((k) => [k, data.daily[k][i]])),
     );
     const hourlyData = Array.from(Array(data.hourly.time.length).keys()).map((i) =>
-      Object.fromEntries(Object.keys(data.hourly).map((k) => [k, data.hourly[k][i]]))
+      Object.fromEntries(Object.keys(data.hourly).map((k) => [k, data.hourly[k][i]])),
     );
 
     const currentDailyIndex = data.current_weather.time < data.daily.time[1] ? 0 : 1;

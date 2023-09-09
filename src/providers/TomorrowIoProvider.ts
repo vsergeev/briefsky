@@ -104,8 +104,8 @@ export class TomorrowIoProvider implements Provider {
               ['timesteps', '1h'],
               ['startTime', 'nowMinus6h'],
               ['endTime', 'nowPlus5d'],
-            ].concat(TomorrowIoProvider.FIELDS.map((f) => ['fields', f]))
-          )
+            ].concat(TomorrowIoProvider.FIELDS.map((f) => ['fields', f])),
+          ),
       );
     } catch (e) {
       throw new Error(`Fetching from Tomorrow.io: ${e.toString()}`);
@@ -172,7 +172,7 @@ export class TomorrowIoProvider implements Provider {
           .filter(
             (h: any) =>
               dateToTimestamp(h.startTime) >= Math.max(dateToTimestamp(adjustDateToMidnight(new Date(d.startTime))), dateToTimestamp(currentTime)) &&
-              dateToTimestamp(h.startTime) < Math.max(dateToTimestamp(adjustDateToMidnight(new Date(d.startTime))), dateToTimestamp(currentTime)) + 86400
+              dateToTimestamp(h.startTime) < Math.max(dateToTimestamp(adjustDateToMidnight(new Date(d.startTime))), dateToTimestamp(currentTime)) + 86400,
           )
           .map((h: any) => ({
             timestamp: new Date(h.startTime),
