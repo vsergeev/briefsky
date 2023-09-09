@@ -19,8 +19,8 @@
   let currentConfiguration: Configuration;
 
   /* Settings State */
-  let providerFactory: ProviderFactory | undefined;
-  let providerParams: object = {};
+  let providerFactory: ProviderFactory;
+  let providerParams: { [key: string]: string } = {};
   let locationMode: LocationMode;
   let location: Location;
   let units: Units;
@@ -41,7 +41,7 @@
   export function open() {
     currentConfiguration = loadConfiguration();
 
-    providerFactory = ProviderFactories.includes(currentConfiguration.providerFactory) ? currentConfiguration.providerFactory : undefined;
+    providerFactory = currentConfiguration.providerFactory;
     locationMode = currentConfiguration.location ? LocationMode.Coordinates : LocationMode.Geolocation;
     location = currentConfiguration.location || new Location('', '');
     units = currentConfiguration.units;
@@ -62,8 +62,8 @@
   function handlePaste(event: ClipboardEvent) {
     if (locationMode !== LocationMode.Coordinates) return;
 
-    const decodedLocation = Location.fromString(event.clipboardData.getData('text'));
-    if (decodedLocation.valid()) {
+    const decodedLocation = Location.fromString(event.clipboardData ? event.clipboardData.getData('text') : undefined);
+    if (decodedLocation && decodedLocation.valid()) {
       location = decodedLocation;
       event.preventDefault();
     }
@@ -111,7 +111,7 @@
             />
           </div>
 
-          {#if providerFactory && providerFactory.fields.length > 0}
+          {#if providerFactory.fields.length > 0}
             {#each providerFactory.fields as field}
               <div>
                 <Label for="input-{field.name}" class="mb-2">{field.description}</Label>

@@ -1,7 +1,7 @@
 <script lang="ts">
   export let value: number = 0;
 
-  const COLOR_MAP = {
+  const COLOR_MAP: { [key: number]: string } = {
     0: 'bg-green-200 dark:bg-green-200 dark:text-gray-900',
     1: 'bg-green-200 dark:bg-green-200 dark:text-gray-900',
     2: 'bg-green-200 dark:bg-green-200 dark:text-gray-900',

@@ -119,7 +119,7 @@ export class PirateWeatherProvider implements Provider {
     };
   }
 
-  static fromParams(params: object, location?: Location): Provider | null {
+  static fromParams(params: { [key: string]: string }, location?: Location): Provider | null {
     if (params['api_key'] === undefined || location === undefined) return null;
     return new PirateWeatherProvider(params['api_key'], location);
   }

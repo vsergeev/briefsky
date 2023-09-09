@@ -196,7 +196,7 @@ export class OpenMeteoProvider implements Provider {
     };
   }
 
-  static fromParams(_: object, location?: Location): Provider | null {
+  static fromParams(_: { [key: string]: string }, location?: Location): Provider | null {
     if (location === undefined) return null;
     return new OpenMeteoProvider(location);
   }

@@ -26,7 +26,7 @@
     Unknown,
   }
 
-  const CLASS_TEXT_MAP = {
+  const CLASS_TEXT_MAP: { [key: number]: [string, string] } = {
     [HourlyConditions.Clear]: ['bg-[#eeeef5] dark:bg-gray-400 text-[#333] dark:text-[#111] [text-shadow:_1px_1px_0_rgb(255_255_255_/_0.6)]', 'Clear'],
     [HourlyConditions.PartlyCloudy]: [
       'bg-[#d5dae2] dark:bg-gray-500 text-[#333] dark:text-[#fff] [text-shadow:_1px_1px_0_rgb(255_255_255_/_0.6)] dark:[text-shadow:_1px_1px_0_rgb(0_0_0_/_0.6)]',
@@ -47,7 +47,7 @@
     [HourlyConditions.Unknown]: ['bg-red-300 text-[#000] [text-shadow:_1px_1px_0_rgb(255_255_255_/_0.6)]', 'Unknown'],
   };
 
-  const ICON_MAP = {
+  const ICON_MAP: { [key: number]: HourlyConditions } = {
     [ConditionsIcon.Clear]: HourlyConditions.Clear,
     [ConditionsIcon.PartlyCloudy]: HourlyConditions.PartlyCloudy,
     [ConditionsIcon.MostlyCloudy]: HourlyConditions.MostlyCloudy,

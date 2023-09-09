@@ -73,7 +73,7 @@ export interface ProviderFactory {
   }[];
 
   /* Provider Instantiation */
-  fromParams(params: object, location?: Location): Provider | null;
+  fromParams(params: { [key: string]: string }, location?: Location): Provider | null;
 }
 
 export interface Provider {

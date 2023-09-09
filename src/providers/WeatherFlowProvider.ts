@@ -117,7 +117,7 @@ export class WeatherFlowProvider implements Provider {
     };
   }
 
-  static fromParams(params: object, _?: Location): Provider | null {
+  static fromParams(params: { [key: string]: string }, _?: Location): Provider | null {
     if (params['api_key'] === undefined || params['station_id'] === undefined) return null;
     return new WeatherFlowProvider(params['api_key'], params['station_id']);
   }

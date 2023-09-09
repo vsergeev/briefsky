@@ -23,7 +23,7 @@ export enum AutoExpand {
 
 export interface Configuration {
   providerFactory: ProviderFactory;
-  providerParams: object;
+  providerParams: { [key: string]: string };
   location: Location | undefined;
   units: Units;
   autoexpand: AutoExpand;
@@ -41,7 +41,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   refreshInterval: 2 * 3600,
 };
 
-function decodeConfiguration(params: object): Configuration {
+function decodeConfiguration(params: { [key: string]: string }): Configuration {
   const providerFactory = ProviderFactories.find((e) => e.id === params['provider']) || DEFAULT_CONFIGURATION.providerFactory;
   const providerParams = Object.fromEntries(providerFactory.fields.map((f: { name: string }) => [f.name, params[f.name]]));
   const location = Location.fromString(params['location']) || DEFAULT_CONFIGURATION.location;
@@ -69,7 +69,7 @@ function decodeConfiguration(params: object): Configuration {
 }
 
 function encodeConfiguration(configuration: Configuration): object {
-  const params = {};
+  const params: { [key: string]: string } = {};
 
   params['provider'] = configuration.providerFactory.id;
   for (const field of configuration.providerFactory.fields) {
@@ -77,7 +77,7 @@ function encodeConfiguration(configuration: Configuration): object {
       params[field.name] = configuration.providerParams[field.name];
     }
   }
-  if (configuration.location !== DEFAULT_CONFIGURATION.location) {
+  if (configuration.location !== undefined && configuration.location !== DEFAULT_CONFIGURATION.location) {
     params['location'] = configuration.location.toString();
   }
   if (configuration.units !== DEFAULT_CONFIGURATION.units) {
@@ -90,7 +90,7 @@ function encodeConfiguration(configuration: Configuration): object {
     params['title'] = configuration.title;
   }
   if (configuration.refreshInterval !== DEFAULT_CONFIGURATION.refreshInterval) {
-    params['refresh_interval'] = configuration.refreshInterval;
+    params['refresh_interval'] = configuration.refreshInterval.toString();
   }
 
   return params;
@@ -106,7 +106,7 @@ export function loadConfiguration(): Configuration {
   if (storageMode === StorageMode.QueryString) {
     return decodeConfiguration(Object.fromEntries(new URLSearchParams(window.location.search).entries()));
   } else {
-    return decodeConfiguration(JSON.parse(window.localStorage.getItem('configuration')) || {});
+    return decodeConfiguration(JSON.parse(window.localStorage.getItem('configuration') || '{}'));
   }
 }
 

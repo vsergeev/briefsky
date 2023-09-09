@@ -5,7 +5,7 @@
   export let value: ConditionsIcon;
   export let size: string = 'small';
 
-  const ICON_MAP = {
+  const ICON_MAP: { [key: number]: string } = {
     [ConditionsIcon.Clear]: 'wi:day-sunny',
     [ConditionsIcon.PartlyCloudy]: 'wi:day-cloudy',
     [ConditionsIcon.MostlyCloudy]: 'wi:cloudy',
@@ -22,7 +22,7 @@
   };
 
   /* Adjustments to make weather icons vertically aligned with each other */
-  const ICON_ADJUSTMENT_MAP = {
+  const ICON_ADJUSTMENT_MAP: { [key: string]: string } = {
     'wi:day-cloudy': size === 'small' ? 'top-0.5' : 'top-2',
     'wi:fog': size === 'small' ? '-top-0.5' : '-top-2',
     'wi:showers': size === 'small' ? '-top-0.5' : '-top-2',

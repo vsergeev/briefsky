@@ -1747,7 +1747,7 @@ export class ExampleProvider implements Provider {
     };
   }
 
-  static fromParams(_: object, __?: Location): Provider | null {
+  static fromParams(_: { [key: string]: string }, __?: Location): Provider | null {
     return new ExampleProvider();
   }
 }
