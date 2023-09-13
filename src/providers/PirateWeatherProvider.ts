@@ -1,6 +1,6 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
 import type { Location } from './Location';
-import { ConditionsIcon } from './Provider';
+import { ConditionsIcon, PrecipitationType } from './Provider';
 
 const CONDITIONS_ICON_MAP: { [key: string]: ConditionsIcon } = {
   'clear-day': ConditionsIcon.Clear,
@@ -105,6 +105,16 @@ export class PirateWeatherProvider implements Provider {
             temperature: h.temperature,
             wind_speed: h.windSpeed * (3600 / 1000),
             wind_direction: h.windBearing,
+            precipitation_probability: Math.round(h.precipProbability * 100),
+            precipitation_amount: h.precipAccumulation * 10,
+            precipitation_type:
+              h.precipType === 'rain'
+                ? PrecipitationType.Rain
+                : h.precipType === 'snow'
+                ? PrecipitationType.Snow
+                : h.precipType === 'sleet'
+                ? PrecipitationType.Sleet
+                : PrecipitationType.None,
           })),
       }))
       .filter((d: DailyWeather) => d.hourly.length === 24);
