@@ -78,6 +78,10 @@ export class TomorrowIoProvider implements Provider {
     'sunriseTime',
     'sunsetTime',
     'precipitationProbability',
+    'rainAccumulation',
+    'snowAccumulation',
+    'sleetAccumulation',
+    'iceAccumulation',
   ];
 
   apiKey: string;
@@ -168,6 +172,7 @@ export class TomorrowIoProvider implements Provider {
         sunrise_timestamp: new Date(d.values.sunriseTime),
         sunset_timestamp: new Date(d.values.sunsetTime),
         precipitation_probability: d.values.precipitationProbability,
+        precipitation_amount: d.values.rainAccumulation + d.values.snowAccumulation + d.values.sleetAccumulation + d.values.iceAccumulation,
         hourly: hourlyData
           .filter(
             (h: any) =>
