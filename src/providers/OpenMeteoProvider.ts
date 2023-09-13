@@ -72,7 +72,7 @@ export class OpenMeteoProvider implements Provider {
   static fields = [];
 
   static ENDPOINT_URL = 'https://api.open-meteo.com/v1/forecast';
-  static DAILY_FIELDS = ['weathercode', 'temperature_2m_max', 'temperature_2m_min', 'sunrise', 'sunset', 'precipitation_sum'];
+  static DAILY_FIELDS = ['weathercode', 'temperature_2m_max', 'temperature_2m_min', 'sunrise', 'sunset', 'precipitation_probability_max', 'precipitation_sum'];
   static HOURLY_FIELDS = [
     'temperature_2m',
     'relativehumidity_2m',
@@ -177,6 +177,7 @@ export class OpenMeteoProvider implements Provider {
         temperature_high: d.temperature_2m_max,
         sunrise_timestamp: new Date(d.sunrise * 1000),
         sunset_timestamp: new Date(d.sunset * 1000),
+        precipitation_probability: d.precipitation_probability_max,
         precipitation_amount: d.precipitation_sum,
         hourly: hourlyData
           .filter((h: any) => h.time >= d.time && h.time < d.time + 86400)
