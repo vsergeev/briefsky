@@ -16,6 +16,13 @@ export enum ConditionsIcon {
   Unknown,
 }
 
+export enum PrecipitationType {
+  None,
+  Rain,
+  Snow,
+  Sleet,
+}
+
 export interface CurrentWeather {
   timestamp: Date;
   conditions: string;
@@ -54,6 +61,9 @@ export interface HourlyWeather {
   temperature: number; // in C
   wind_speed?: number; // in km/h
   wind_direction?: number; // in degrees 0-360
+  precipitation_probability?: number; // in integral precent 0-100
+  precipitation_amount?: number; // in mm
+  precipitation_type?: PrecipitationType;
 }
 
 export interface Weather {
