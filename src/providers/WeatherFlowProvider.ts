@@ -1,6 +1,6 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
 import type { Location } from './Location';
-import { ConditionsIcon } from './Provider';
+import { ConditionsIcon, PrecipitationType } from './Provider';
 
 const CONDITIONS_ICON_MAP: { [key: string]: ConditionsIcon } = {
   'clear-day': ConditionsIcon.Clear,
@@ -108,6 +108,16 @@ export class WeatherFlowProvider implements Provider {
           temperature: h.air_temperature,
           wind_speed: h.wind_avg * (3600 / 1000),
           wind_direction: h.wind_direction,
+          precipitation_probability: h.precip_probability,
+          precipitation_amount: h.precip,
+          precipitation_type:
+            h.precip_type === undefined
+              ? PrecipitationType.None
+              : h.precip_type === 'snow'
+              ? PrecipitationType.Snow
+              : h.precip_type === 'sleet'
+              ? PrecipitationType.Sleet
+              : PrecipitationType.Rain,
         })),
     }));
 
