@@ -21,15 +21,18 @@
     <Icon icon="mingcute:sunset-fill" class="inline text-2xl sm:text-3xl align-bottom" />
     <span class="text-sm md:text-base"><Timestamp format="short" value={daily.sunset_timestamp} /></span>
   </div>
-  {#if daily.precipitation_probability !== undefined}
-    <div>
-      <span class="text-sm md:text-base font-semibold">Precipitation:</span> <span class="text-sm md:text-base">{daily.precipitation_probability}%</span>
-    </div>
-  {/if}
-  {#if daily.precipitation_amount !== undefined}
+  {#if daily.precipitation_probability !== undefined || daily.precipitation_amount !== undefined}
     <div>
       <span class="text-sm md:text-base font-semibold">Precipitation:</span>
-      <span class="text-sm md:text-base"><Amount value={daily.precipitation_amount} /></span>
+      <span class="text-sm md:text-base">
+        {#if daily.precipitation_probability !== undefined && daily.precipitation_amount !== undefined}
+          {daily.precipitation_probability}%, <Amount value={daily.precipitation_amount} />
+        {:else if daily.precipitation_probability !== undefined}
+          {daily.precipitation_probability}%
+        {:else}
+          <Amount value={daily.precipitation_amount} />
+        {/if}
+      </span>
     </div>
   {/if}
 </div>
