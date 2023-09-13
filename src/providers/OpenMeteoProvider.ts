@@ -1,6 +1,6 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
 import type { Location } from './Location';
-import { ConditionsIcon } from './Provider';
+import { ConditionsIcon, PrecipitationType } from './Provider';
 
 const CONDITIONS_TEXT_MAP: { [key: string]: string } = {
   '0': 'Clear Sky',
@@ -83,6 +83,11 @@ export class OpenMeteoProvider implements Provider {
     'visibility',
     'windspeed_10m',
     'winddirection_10m',
+    'precipitation_probability',
+    'precipitation',
+    'snowfall',
+    'rain',
+    'showers',
   ];
 
   location: Location;
@@ -188,6 +193,10 @@ export class OpenMeteoProvider implements Provider {
             temperature: h.temperature_2m,
             wind_speed: h.windspeed_10m,
             wind_direction: h.winddirection_10m,
+            precipitation_probability: h.precipitation_probability,
+            precipitation_amount: h.precipitation,
+            precipitation_type:
+              h.precipitation === 0 ? PrecipitationType.None : h.snowfall > h.rain + h.showers ? PrecipitationType.Snow : PrecipitationType.Rain,
           })),
       }));
 
