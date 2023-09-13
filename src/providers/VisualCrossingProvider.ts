@@ -1,6 +1,6 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
 import type { Location } from './Location';
-import { ConditionsIcon } from './Provider';
+import { ConditionsIcon, PrecipitationType } from './Provider';
 
 const CONDITIONS_ICON_MAP: { [key: string]: ConditionsIcon } = {
   snow: ConditionsIcon.Snow,
@@ -111,6 +111,18 @@ export class VisualCrossingProvider implements Provider {
             temperature: h.temp,
             wind_speed: h.windspeed,
             wind_direction: h.winddir,
+            precipitation_probability: h.precipprob,
+            precipitation_amount: h.precip,
+            precipitation_type:
+              h.preciptype === null
+                ? PrecipitationType.None
+                : h.preciptype[0] === 'rain' || h.preciptype[0] === 'freezingrain'
+                ? PrecipitationType.Rain
+                : h.preciptype[0] === 'snow'
+                ? PrecipitationType.Snow
+                : h.preciptype[0] === 'ice'
+                ? PrecipitationType.Sleet
+                : PrecipitationType.None,
           })),
       }));
 
