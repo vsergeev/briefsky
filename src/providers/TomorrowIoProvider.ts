@@ -1,6 +1,6 @@
 import type { Provider, CurrentWeather, DailyWeather, Weather } from './Provider';
 import type { Location } from './Location';
-import { ConditionsIcon } from './Provider';
+import { ConditionsIcon, PrecipitationType } from './Provider';
 
 const CONDITIONS_TEXT_MAP: { [key: string]: string } = {
   '1000': 'Clear, Sunny',
@@ -78,6 +78,7 @@ export class TomorrowIoProvider implements Provider {
     'sunriseTime',
     'sunsetTime',
     'precipitationProbability',
+    'precipitationType',
     'rainAccumulation',
     'snowAccumulation',
     'sleetAccumulation',
@@ -186,6 +187,16 @@ export class TomorrowIoProvider implements Provider {
             temperature: h.values.temperature,
             wind_speed: h.values.windSpeed * (3600 / 1000),
             wind_direction: h.values.windDirection,
+            precipitation_probability: h.values.precipitationProbability,
+            precipitation_amount: h.values.rainAccumulation + h.values.snowAccumulation + h.values.sleetAccumulation + h.values.iceAccumulation,
+            precipitation_type:
+              h.values.precipitationType === 1 || h.values.precipitationType === 3
+                ? PrecipitationType.Rain
+                : h.values.precipitationType === 2
+                ? PrecipitationType.Snow
+                : h.values.precipitationType === 3
+                ? PrecipitationType.Sleet
+                : PrecipitationType.None,
           })),
       }))
       .filter((d: any) => d.hourly.length === 24);
