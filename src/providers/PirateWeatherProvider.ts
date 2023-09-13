@@ -95,7 +95,7 @@ export class PirateWeatherProvider implements Provider {
         sunrise_timestamp: new Date(d.sunriseTime * 1000),
         sunset_timestamp: new Date(d.sunsetTime * 1000),
         precipitation_probability: Math.round(d.precipProbability * 100),
-        precipitation_amount: d.precipAccumulation,
+        precipitation_amount: d.precipAccumulation * 10,
         hourly: data.hourly.data
           .filter((h: any) => h.time >= Math.max(d.time, data.currently.time) && h.time < Math.max(data.currently.time, d.time) + 86400)
           .map((h: any) => ({
