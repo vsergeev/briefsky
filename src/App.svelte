@@ -127,7 +127,7 @@
   <div class="container mx-auto">
     {#if weather}
       <CurrentDetails current={weather.current} />
-      <div class="mx-6 mb-6">
+      <div class="mx-6 mb-4">
         <HourlyDetails hourly={weather.current.hourly} />
       </div>
       <Accordion
@@ -138,7 +138,7 @@
       >
         {#each weather.daily as daily, i}
           <AccordionItem
-            class="!p-2 md:!p-4"
+            class="!px-2 !py-3 md:!p-4"
             open={$configuration.autoexpand === AutoExpand.All || (i === 0 && $configuration.autoexpand === AutoExpand.Today)}
           >
             <span slot="header" class="w-full">
