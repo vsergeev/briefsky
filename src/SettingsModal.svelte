@@ -26,6 +26,7 @@
   let units: Units;
   let autoexpand: AutoExpand;
   let title: string;
+  let showHourlyPrecipitation: boolean;
   let showHourlyWind: boolean;
   let valid: boolean;
 
@@ -48,6 +49,7 @@
     units = currentConfiguration.units;
     autoexpand = currentConfiguration.autoexpand;
     title = currentConfiguration.title;
+    showHourlyPrecipitation = currentConfiguration.showHourlyPrecipitation;
     showHourlyWind = currentConfiguration.showHourlyWind;
 
     updateProviderParams();
@@ -84,6 +86,7 @@
       autoexpand,
       title,
       refreshInterval: currentConfiguration.refreshInterval,
+      showHourlyPrecipitation,
       showHourlyWind,
     };
 
@@ -199,6 +202,9 @@
               ]}
               bind:value={autoexpand}
             />
+          </div>
+          <div>
+            <Checkbox bind:checked={showHourlyPrecipitation}>Show Hourly Precipitation Chart</Checkbox>
           </div>
           <div>
             <Checkbox bind:checked={showHourlyWind}>Show Hourly Wind Chart</Checkbox>

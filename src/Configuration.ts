@@ -29,6 +29,7 @@ export interface Configuration {
   autoexpand: AutoExpand;
   title: string;
   refreshInterval: number;
+  showHourlyPrecipitation: boolean;
   showHourlyWind: boolean;
 }
 
@@ -40,6 +41,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   autoexpand: AutoExpand.None,
   title: '',
   refreshInterval: 2 * 3600,
+  showHourlyPrecipitation: true,
   showHourlyWind: true,
 };
 
@@ -58,6 +60,8 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
       ? AutoExpand.None
       : DEFAULT_CONFIGURATION.autoexpand;
   const refreshInterval = parseInt(params['refresh_interval']) || DEFAULT_CONFIGURATION.refreshInterval;
+  const showHourlyPrecipitation =
+    params['hourly_precipitation'] === undefined ? DEFAULT_CONFIGURATION.showHourlyPrecipitation : params['hourly_precipitation'] === 'true' ? true : false;
   const showHourlyWind = params['hourly_wind'] === undefined ? DEFAULT_CONFIGURATION.showHourlyWind : params['hourly_wind'] === 'true' ? true : false;
 
   return {
@@ -68,6 +72,7 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
     units,
     autoexpand,
     refreshInterval,
+    showHourlyPrecipitation,
     showHourlyWind,
   };
 }
@@ -95,6 +100,9 @@ function encodeConfiguration(configuration: Configuration): object {
   }
   if (configuration.refreshInterval !== DEFAULT_CONFIGURATION.refreshInterval) {
     params['refresh_interval'] = configuration.refreshInterval.toString();
+  }
+  if (configuration.showHourlyPrecipitation !== DEFAULT_CONFIGURATION.showHourlyPrecipitation) {
+    params['hourly_precipitation'] = configuration.showHourlyPrecipitation.toString();
   }
   if (configuration.showHourlyWind !== DEFAULT_CONFIGURATION.showHourlyWind) {
     params['hourly_wind'] = configuration.showHourlyWind.toString();

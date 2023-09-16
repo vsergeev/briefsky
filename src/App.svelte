@@ -28,6 +28,7 @@
   import DailyDetails from './components/DailyDetails.svelte';
   import HourlyDetails from './components/HourlyDetails.svelte';
   import HourlyWindChart from './components/HourlyWindChart.svelte';
+  import HourlyPrecipitationChart from './components/HourlyPrecipitationChart.svelte';
   import SettingsModal from './SettingsModal.svelte';
   import AboutModal from './AboutModal.svelte';
 
@@ -153,6 +154,9 @@
             </span>
             <DailyDetails {daily} />
             <HourlyDetails hourly={daily.hourly} />
+            {#if daily.hourly[0].precipitation_probability !== undefined && daily.hourly[0].precipitation_amount !== undefined && daily.hourly[0].precipitation_type !== undefined && $configuration.showHourlyPrecipitation}
+              <HourlyPrecipitationChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
+            {/if}
             {#if daily.hourly[0].wind_speed !== undefined && $configuration.showHourlyWind}
               <HourlyWindChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
             {/if}
