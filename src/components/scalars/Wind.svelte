@@ -1,19 +1,21 @@
+<script context="module" lang="ts">
+  const CARDINAL_DIRECTIONS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+
+  export function kphToMph(speed: number): number {
+    return speed * 0.62137119;
+  }
+
+  export function degreesToCardinal(degrees: number): string {
+    return CARDINAL_DIRECTIONS[Math.floor((degrees + 11.25) / 22.5) % 16];
+  }
+</script>
+
 <script lang="ts">
   import { configuration, Units } from '../../Configuration';
   import Icon from '@iconify/svelte';
 
   export let speed: number = 0;
   export let direction: number = 0;
-
-  const CARDINAL_DIRECTIONS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
-
-  function kphToMph(speed: number): number {
-    return speed * 0.62137119;
-  }
-
-  function degreesToCardinal(degrees: number): string {
-    return CARDINAL_DIRECTIONS[Math.floor((degrees + 11.25) / 22.5) % 16];
-  }
 </script>
 
 {#if $configuration.units === Units.Imperial}
