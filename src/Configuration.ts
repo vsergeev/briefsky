@@ -29,6 +29,7 @@ export interface Configuration {
   autoexpand: AutoExpand;
   title: string;
   refreshInterval: number;
+  showHourlyWind: boolean;
 }
 
 const DEFAULT_CONFIGURATION: Configuration = {
@@ -39,6 +40,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   autoexpand: AutoExpand.None,
   title: '',
   refreshInterval: 2 * 3600,
+  showHourlyWind: true,
 };
 
 function decodeConfiguration(params: { [key: string]: string }): Configuration {
@@ -56,6 +58,7 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
       ? AutoExpand.None
       : DEFAULT_CONFIGURATION.autoexpand;
   const refreshInterval = parseInt(params['refresh_interval']) || DEFAULT_CONFIGURATION.refreshInterval;
+  const showHourlyWind = params['hourly_wind'] === undefined ? DEFAULT_CONFIGURATION.showHourlyWind : params['hourly_wind'] === 'true' ? true : false;
 
   return {
     providerFactory,
@@ -65,6 +68,7 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
     units,
     autoexpand,
     refreshInterval,
+    showHourlyWind,
   };
 }
 
@@ -91,6 +95,9 @@ function encodeConfiguration(configuration: Configuration): object {
   }
   if (configuration.refreshInterval !== DEFAULT_CONFIGURATION.refreshInterval) {
     params['refresh_interval'] = configuration.refreshInterval.toString();
+  }
+  if (configuration.showHourlyWind !== DEFAULT_CONFIGURATION.showHourlyWind) {
+    params['hourly_wind'] = configuration.showHourlyWind.toString();
   }
 
   return params;

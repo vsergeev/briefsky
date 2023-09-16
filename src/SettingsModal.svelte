@@ -6,7 +6,7 @@
   import { Location } from './providers/Location';
   import { Units, AutoExpand, loadConfiguration, storeConfiguration } from './Configuration';
 
-  import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Button, ButtonGroup, Spinner, Radio } from 'flowbite-svelte';
+  import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Button, ButtonGroup, Spinner, Radio, Checkbox } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
 
   enum LocationMode {
@@ -26,6 +26,7 @@
   let units: Units;
   let autoexpand: AutoExpand;
   let title: string;
+  let showHourlyWind: boolean;
   let valid: boolean;
 
   /* Loading State for location */
@@ -47,6 +48,7 @@
     units = currentConfiguration.units;
     autoexpand = currentConfiguration.autoexpand;
     title = currentConfiguration.title;
+    showHourlyWind = currentConfiguration.showHourlyWind;
 
     updateProviderParams();
 
@@ -82,6 +84,7 @@
       autoexpand,
       title,
       refreshInterval: currentConfiguration.refreshInterval,
+      showHourlyWind,
     };
 
     storeConfiguration(configuration);
@@ -196,6 +199,9 @@
               ]}
               bind:value={autoexpand}
             />
+          </div>
+          <div>
+            <Checkbox bind:checked={showHourlyWind}>Show Hourly Wind Chart</Checkbox>
           </div>
         </div>
       </TabItem>

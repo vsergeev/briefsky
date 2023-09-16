@@ -27,6 +27,7 @@
   import DailySummary from './components/DailySummary.svelte';
   import DailyDetails from './components/DailyDetails.svelte';
   import HourlyDetails from './components/HourlyDetails.svelte';
+  import HourlyWindChart from './components/HourlyWindChart.svelte';
   import SettingsModal from './SettingsModal.svelte';
   import AboutModal from './AboutModal.svelte';
 
@@ -139,6 +140,7 @@
         {#each weather.daily as daily, i}
           <AccordionItem
             class="!px-2 !py-3 md:!p-4"
+            paddingDefault="py-4 px-4 md:px-14"
             open={$configuration.autoexpand === AutoExpand.All || (i === 0 && $configuration.autoexpand === AutoExpand.Today)}
           >
             <span slot="header" class="w-full">
@@ -151,6 +153,9 @@
             </span>
             <DailyDetails {daily} />
             <HourlyDetails hourly={daily.hourly} />
+            {#if daily.hourly[0].wind_speed !== undefined && $configuration.showHourlyWind}
+              <HourlyWindChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
+            {/if}
           </AccordionItem>
         {/each}
       </Accordion>
