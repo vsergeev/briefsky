@@ -32,7 +32,10 @@
     'wi:thunderstorm': size === 'small' ? '-top-0.5' : '-top-2',
   };
 
-  const icon = ICON_MAP[value] ?? ICON_MAP[ConditionsIcon.Unknown];
+  /* Icon state */
+  let icon: string;
+
+  $: icon = ICON_MAP[value] ?? ICON_MAP[ConditionsIcon.Unknown];
 </script>
 
 <Icon
