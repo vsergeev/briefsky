@@ -180,7 +180,8 @@ export class TomorrowIoProvider implements Provider {
             conditions_icon: CONDITIONS_ICON_MAP[h.values.weatherCode] ?? ConditionsIcon.Unknown,
             temperature: h.values.temperature,
           })),
-      }));
+      }))
+      .filter((d: any) => d.hourly.length === 24);
 
     /* Update temperature low and high based on hourly data, since Tomorrow.Io returns 6am-6am days */
     for (const day of daily) {
