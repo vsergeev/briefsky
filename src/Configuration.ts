@@ -38,7 +38,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   providerParams: {},
   location: undefined,
   units: new Intl.Locale(window.navigator.language).region === 'US' ? Units.Imperial : Units.Metric,
-  autoexpand: AutoExpand.None,
+  autoexpand: AutoExpand.Today,
   title: '',
   refreshInterval: 2 * 3600,
   showHourlyPrecipitation: true,
