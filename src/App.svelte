@@ -129,7 +129,7 @@
   <div class="container mx-auto">
     {#if weather}
       <CurrentDetails current={weather.current} />
-      <div class="mx-6 mb-4">
+      <div class="mx-6 mb-6">
         <HourlyDetails hourly={weather.current.hourly} />
       </div>
       <Accordion
