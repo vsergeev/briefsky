@@ -97,7 +97,7 @@
 
 <Modal bind:open={modalOpen} title="Settings" class="w-full sm:w-2/3">
   <div>
-    <Tabs contentClass="mt-6">
+    <Tabs activeClasses="p-4 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-700 dark:text-primary-300" contentClass="mt-6">
       <TabItem open title="General">
         <div class="space-y-4">
           <div>

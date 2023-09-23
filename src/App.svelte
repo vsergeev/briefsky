@@ -1,7 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { Alert, Navbar, Button, FooterIcon, DarkMode, Accordion, AccordionItem, Popover, Progressbar, Skeleton, ListPlaceholder } from 'flowbite-svelte';
+  import {
+    Alert,
+    CloseButton,
+    Navbar,
+    Button,
+    FooterIcon,
+    DarkMode,
+    Accordion,
+    AccordionItem,
+    Popover,
+    Progressbar,
+    Skeleton,
+    ListPlaceholder,
+  } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
 
   import type { ProviderFactory, Provider, Weather } from './providers/Provider';
@@ -18,7 +31,7 @@
   import AboutModal from './AboutModal.svelte';
 
   /* Constants */
-  const navbarButtonClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5';
+  const navbarButtonClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5 focus:ring-0';
 
   /* State */
   let provider: Provider;
@@ -72,9 +85,10 @@
 <main class="text-gray-800 dark:text-gray-200 text-sm md:text-base">
   <Navbar navClass="text-gray-700 dark:text-gray-300 px-4 py-2.5 w-full" navDivClass="mx-auto grid grid-cols-2 md:grid-cols-6 items-center" color="none">
     {#if provider && providerFactory(provider) === ExampleProvider}
-      <Alert class="mb-2 col-span-2 md:col-span-6" color="dark" border dismissable>
+      <Alert class="bg-gray-100 dark:bg-gray-700 mb-2 col-span-2 md:col-span-6" color="dark" border dismissable>
         <span slot="icon"><Icon icon="radix-icons:exclamation-triangle" class="text-lg" /></span>
         <span class="font-semibold">Example Weather Provider</span> — Please configure a weather provider in the settings.
+        <CloseButton class="!ml-auto -mx-1.5 -my-1.5 hover:text-black dark:hover:text-white" slot="close-button" let:close on:click={close} />
       </Alert>
     {/if}
     <div>
@@ -91,11 +105,13 @@
     </div>
     <div class="flex justify-end">
       <div class="hidden sm:block">
-        <Button id="btn-refresh" on:click={refresh} btnClass={navbarButtonClass}><Icon icon="radix-icons:reload" class="text-xl" /></Button>
+        <Button id="btn-refresh" on:click={refresh} color="none" class={navbarButtonClass}><Icon icon="radix-icons:reload" class="text-xl" /></Button>
       </div>
-      <Button on:click={() => settingsModal.open()} btnClass={navbarButtonClass}><Icon icon="radix-icons:gear" class="text-xl" /></Button>
-      <Button on:click={() => aboutModal.open()} btnClass={navbarButtonClass}><Icon icon="radix-icons:question-mark-circled" class="text-xl" /></Button>
-      <DarkMode btnClass={navbarButtonClass} />
+      <Button on:click={() => settingsModal.open()} color="none" class={navbarButtonClass}><Icon icon="radix-icons:gear" class="text-xl" /></Button>
+      <Button on:click={() => aboutModal.open()} color="none" class={navbarButtonClass}
+        ><Icon icon="radix-icons:question-mark-circled" class="text-xl" /></Button
+      >
+      <DarkMode class={navbarButtonClass} />
     </div>
   </Navbar>
 
@@ -116,9 +132,9 @@
       </div>
       <Accordion
         multiple
-        activeClasses="bg-gray-100 dark:bg-gray-700 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800"
-        inactiveClasses="hover:bg-gray-100 hover:dark:bg-gray-700"
-        defaultClass="mx-2 sm:mx-0"
+        classActive="text-inherit dark:text-inherit bg-gray-100 dark:bg-gray-700 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800"
+        classInactive="text-inherit dark:text-inherit hover:bg-gray-100 hover:dark:bg-gray-700"
+        class="text-inherit dark:text-inherit mx-2 sm:mx-0"
       >
         {#each weather.daily as daily, i}
           <AccordionItem
@@ -161,7 +177,7 @@
         </div>
       {/if}
       <div class="mb-3">
-        <FooterIcon href="https://github.com/vsergeev/briefsky" target="_blank" class="text-gray-400 hover:text-gray-900">
+        <FooterIcon href="https://github.com/vsergeev/briefsky" target="_blank" class="text-gray-500 hover:text-gray-900">
           <Icon icon="mdi:github" class="text-3xl" />
         </FooterIcon>
       </div>
