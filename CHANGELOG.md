@@ -1,3 +1,14 @@
+* v1.4.0 - 09/23/2023
+    * Add hourly wind chart.
+    * Add hourly precipitation chart.
+    * Improve daily weather formatting and layout on small screens.
+    * Change auto-expand days setting default from None to Today.
+    * Fix precipitation amount scaling for PirateWeatherProvider.
+    * Add daily precipitation probability for OpenMeteoProvider.
+    * Add daily precipitation amount for TomorrowIoProvider.
+    * Reduce forecast days for free API query in TomorrowIoProvider.
+    * Upgrade to Svelte 4, TypeScript 5, and flowbite-svelte 0.44.17.
+
 * v1.3.0 - 06/28/2023
     * Improve current details layout on small and medium screens.
     * Add wind direction icon.
