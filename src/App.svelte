@@ -146,22 +146,23 @@
             paddingDefault="py-4 px-4 md:px-14"
             open={$configuration.autoexpand === AutoExpand.All || (i === 0 && $configuration.autoexpand === AutoExpand.Today)}
           >
-            <span slot="header" class="w-full">
-              <DailySummary
-                current={weather.current}
-                {daily}
-                global_low={Math.min(...weather.daily.map((d) => d.temperature_low))}
-                global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
-              />
-            </span>
-            <DailyDetails {daily} />
-            <HourlyDetails hourly={daily.hourly} />
-            {#if daily.hourly[0].precipitation_probability !== undefined && daily.hourly[0].precipitation_amount !== undefined && daily.hourly[0].precipitation_type !== undefined && $configuration.showHourlyPrecipitation}
-              <HourlyPrecipitationChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
-            {/if}
-            {#if daily.hourly[0].wind_speed !== undefined && $configuration.showHourlyWind}
-              <HourlyWindChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
-            {/if}
+            <DailySummary
+              slot="header"
+              current={weather.current}
+              {daily}
+              global_low={Math.min(...weather.daily.map((d) => d.temperature_low))}
+              global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
+            />
+            <div class="grid gap-y-4 mb-2">
+              <DailyDetails {daily} />
+              <HourlyDetails hourly={daily.hourly} />
+              {#if daily.hourly[0].precipitation_probability !== undefined && $configuration.showHourlyPrecipitation}
+                <HourlyPrecipitationChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
+              {/if}
+              {#if daily.hourly[0].wind_speed !== undefined && $configuration.showHourlyWind}
+                <HourlyWindChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
+              {/if}
+            </div>
           </AccordionItem>
         {/each}
       </Accordion>
