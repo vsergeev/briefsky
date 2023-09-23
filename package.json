@@ -22,7 +22,7 @@
     "classnames": "^2.3.2",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-svelte3": "^4.0.0",
+    "eslint-plugin-svelte": "^2.33.2",
     "flowbite": "^1.8.1",
     "flowbite-svelte": "^0.44.17",
     "postcss": "^8.4.14",
