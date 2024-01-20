@@ -21,6 +21,11 @@ export enum AutoExpand {
   None,
 }
 
+export enum Layout {
+  Horizontal,
+  Vertical,
+}
+
 export interface Configuration {
   providerFactory: ProviderFactory;
   providerParams: { [key: string]: string };
@@ -31,6 +36,7 @@ export interface Configuration {
   refreshInterval: number;
   showHourlyPrecipitation: boolean;
   showHourlyWind: boolean;
+  layout: Layout;
 }
 
 const DEFAULT_CONFIGURATION: Configuration = {
@@ -43,6 +49,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
   refreshInterval: 2 * 3600,
   showHourlyPrecipitation: true,
   showHourlyWind: true,
+  layout: Layout.Horizontal,
 };
 
 function decodeConfiguration(params: { [key: string]: string }): Configuration {
@@ -63,6 +70,7 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
   const showHourlyPrecipitation =
     params['hourly_precipitation'] === undefined ? DEFAULT_CONFIGURATION.showHourlyPrecipitation : params['hourly_precipitation'] === 'true' ? true : false;
   const showHourlyWind = params['hourly_wind'] === undefined ? DEFAULT_CONFIGURATION.showHourlyWind : params['hourly_wind'] === 'true' ? true : false;
+  const layout = params['layout'] === 'vertical' ? Layout.Vertical : Layout.Horizontal;
 
   return {
     providerFactory,
@@ -74,6 +82,7 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
     refreshInterval,
     showHourlyPrecipitation,
     showHourlyWind,
+    layout,
   };
 }
 
@@ -107,7 +116,9 @@ function encodeConfiguration(configuration: Configuration): object {
   if (configuration.showHourlyWind !== DEFAULT_CONFIGURATION.showHourlyWind) {
     params['hourly_wind'] = configuration.showHourlyWind.toString();
   }
-
+  if (configuration.layout !== DEFAULT_CONFIGURATION.layout) {
+    params['layout'] = configuration.layout.toString();
+  }
   return params;
 }
 

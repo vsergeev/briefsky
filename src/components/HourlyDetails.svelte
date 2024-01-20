@@ -62,7 +62,7 @@
     [ConditionsIcon.Thunderstorm]: HourlyConditions.Rain,
   };
 
-  const MIN_TEMPERATURE_OPACITY = 0.25;
+  const MIN_TEMPERATURE_OPACITY = 0.35;
 
   /* State */
 
