@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CurrentWeather } from '../providers/Provider';
+  import type { CurrentWeather, SunTimes, DailyPrecipitation } from '../providers/Provider';
 
   import Conditions from './scalars/Conditions.svelte';
   import ConditionsIcon from './scalars/ConditionsIcon.svelte';
@@ -9,8 +9,15 @@
   import UVIndex from './scalars/UVIndex.svelte';
   import Distance from './scalars/Distance.svelte';
   import Pressure from './scalars/Pressure.svelte';
+  import DailySunDetails from './DailySunDetails.svelte';
+  import DailyPrecipitationDetails from './DailyPrecipitationDetails.svelte';
 
+  import Icon from '@iconify/svelte';
+
+  import Timestamp from './scalars/Timestamp.svelte';
   export let current: CurrentWeather;
+  export let suntimes: SunTimes;
+  export let precipitation: DailyPrecipitation;
 </script>
 
 <div>
@@ -36,5 +43,7 @@
       <div><span class="font-semibold">Visibility: </span><Distance value={current.visibility} /></div>
     {/if}
     <div><span class="font-semibold">Pressure: </span><Pressure value={current.pressure} /></div>
+    <DailySunDetails {suntimes} />
+    <!-- <DailyPrecipitationDetails {precipitation} /> -->
   </div>
 </div>

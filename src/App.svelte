@@ -20,7 +20,7 @@
   import type { ProviderFactory, Provider, Weather } from './providers/Provider';
   import { Location } from './providers/Location';
   import { ExampleProvider } from './providers/ExampleProvider';
-  import { AutoExpand, configuration } from './Configuration';
+  import { AutoExpand, configuration, Layout } from './Configuration';
 
   import Timestamp from './components/scalars/Timestamp.svelte';
   import CurrentDetails from './components/CurrentDetails.svelte';
@@ -128,11 +128,16 @@
 
   <div class="container mx-auto">
     {#if weather}
+      {@const { sunset_timestamp, sunrise_timestamp, precipitation_amount, precipitation_probability } = weather.daily[0]}
       <div class="mb-6">
-        <CurrentDetails current={weather.current} />
+        <CurrentDetails
+          current={weather.current}
+          suntimes={{ sunset_timestamp, sunrise_timestamp }}
+          precipitation={{ precipitation_probability, precipitation_amount }}
+        />
       </div>
       <div class="mx-6 mb-6">
-        <HourlyDetails hourly={weather.current.hourly} />
+        <HourlyDetails hourly={weather.current.hourly} today />
       </div>
       <Accordion
         multiple
@@ -141,20 +146,21 @@
         class="text-inherit dark:text-inherit mx-2 sm:mx-0"
       >
         {#each weather.daily as daily, i}
-          <AccordionItem
-            class="!px-2 !py-3 md:!p-4"
-            paddingDefault="py-4 px-4 md:px-14"
-            open={$configuration.autoexpand === AutoExpand.All || (i === 0 && $configuration.autoexpand === AutoExpand.Today)}
-          >
-            <DailySummary
-              slot="header"
-              current={weather.current}
-              {daily}
-              global_low={Math.min(...weather.daily.map((d) => d.temperature_low))}
-              global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
-            />
-            <div class="grid gap-y-4 mb-2">
+          {#if ($configuration.layout === Layout.Vertical && i > 0) || $configuration.layout === Layout.Horizontal}
+            <AccordionItem
+              class="!px-2 md:!px-4 py-4 md:px-8"
+              paddingDefault="py-4 px-4 md:px-14"
+              open={$configuration.autoexpand === AutoExpand.All || (i === 0 && $configuration.autoexpand === AutoExpand.Today)}
+            >
+              <DailySummary
+                slot="header"
+                current={weather.current}
+                {daily}
+                global_low={Math.min(...weather.daily.map((d) => d.temperature_low))}
+                global_high={Math.max(...weather.daily.map((d) => d.temperature_high))}
+              />
               <DailyDetails {daily} />
+              <br />
               <HourlyDetails hourly={daily.hourly} />
               {#if daily.hourly[0].precipitation_probability !== undefined && $configuration.showHourlyPrecipitation}
                 <HourlyPrecipitationChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
@@ -162,8 +168,8 @@
               {#if daily.hourly[0].wind_speed !== undefined && $configuration.showHourlyWind}
                 <HourlyWindChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
               {/if}
-            </div>
-          </AccordionItem>
+            </AccordionItem>
+          {/if}
         {/each}
       </Accordion>
     {:else if error}
