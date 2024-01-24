@@ -117,7 +117,7 @@ function encodeConfiguration(configuration: Configuration): object {
     params['hourly_wind'] = configuration.showHourlyWind.toString();
   }
   if (configuration.layout !== DEFAULT_CONFIGURATION.layout) {
-    params['layout'] = configuration.layout.toString();
+    params['layout'] = configuration.layout === Layout.Vertical ? 'vertical' : 'horizontal';
   }
   return params;
 }
