@@ -27,7 +27,7 @@ export class Location {
     return new Promise(function (resolve) {
       window.navigator.geolocation.getCurrentPosition(
         (position: GeolocationPosition) => {
-          resolve(new Location(position.coords.latitude.toFixed(3), position.coords.longitude.toFixed(3)));
+          resolve(new Location(position.coords.latitude.toFixed(7), position.coords.longitude.toFixed(7)));
         },
         (error: GeolocationPositionError) => {
           console.error(`Error getting geolocation: ${error.message} (${error.code})`);
