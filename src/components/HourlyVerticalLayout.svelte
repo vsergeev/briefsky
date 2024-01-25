@@ -17,7 +17,7 @@
       <div class={CLASS_TEXT_MAP[entry.conditions][0]} style="height: {(100 * entry.duration) / 24}%;"></div>
     {/each}
   </div>
-  <div class="text-sm ml-2 grow">
+  <div class="text-sm ml-2">
     <div style="height:{100 / 24}%;transform:translateY(2px);" class="grow flex items-top">
       {#if today}
         <span class="font-bold w-9 mr-2 inline-block text-right">Now</span>
@@ -29,7 +29,7 @@
       <span class="font-normal italic mr-2">{hourly[0].conditions}</span>
       <span class="min-w-fit inline-block border-solid border-b-[1px] border-slate-300 grow h-2/4"></span>
     </div>
-    <div style="height:{100 / 24}%;transform:translateY(2px);">&nbsp;</div>
+    <div style="height:{100 / 24}%">&nbsp;</div>
     {#each Array(11) as _, i}
       {@const timestamp = hourly[2 * (i + 1)].timestamp}
       {@const condition = hourly[2 * (i + 1)].conditions}
@@ -41,7 +41,7 @@
         <span class="font-normal italic mr-2 {newCondition ? 'block' : 'hidden'}">{newCondition ? condition : ''}</span>
         <span class="min-w-fit inline-block border-solid border-b-[1px] border-slate-300 grow h-2/4" style="min-width: calc({width}% - 50px)"></span>
       </div>
-      <div style="height:{100 / 24}%;background:transparent;">&nbsp;</div>
+      <div style="height:{100 / 24}%">&nbsp;</div>
     {/each}
   </div>
   <div class="grow text-base sm:text-lg font-light text-black dark:text-white">
