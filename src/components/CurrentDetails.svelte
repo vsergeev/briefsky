@@ -10,14 +10,9 @@
   import Distance from './scalars/Distance.svelte';
   import Pressure from './scalars/Pressure.svelte';
   import DailySunDetails from './DailySunDetails.svelte';
-  import DailyPrecipitationDetails from './DailyPrecipitationDetails.svelte';
 
-  import Icon from '@iconify/svelte';
-
-  import Timestamp from './scalars/Timestamp.svelte';
   export let current: CurrentWeather;
   export let suntimes: SunTimes;
-  export let precipitation: DailyPrecipitation;
 </script>
 
 <div>
