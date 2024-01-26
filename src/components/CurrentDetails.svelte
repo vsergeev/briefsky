@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CurrentWeather, SunTimes, DailyPrecipitation } from '../providers/Provider';
+  import type { CurrentWeather, SunTimes } from '../providers/Provider';
 
   import Conditions from './scalars/Conditions.svelte';
   import ConditionsIcon from './scalars/ConditionsIcon.svelte';

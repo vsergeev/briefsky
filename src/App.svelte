@@ -130,11 +130,7 @@
     {#if weather}
       {@const { sunset_timestamp, sunrise_timestamp, precipitation_amount, precipitation_probability } = weather.daily[0]}
       <div class="mb-6">
-        <CurrentDetails
-          current={weather.current}
-          suntimes={{ sunset_timestamp, sunrise_timestamp }}
-          precipitation={{ precipitation_probability, precipitation_amount }}
-        />
+        <CurrentDetails current={weather.current} suntimes={{ sunset_timestamp, sunrise_timestamp }} />
       </div>
       <div class="mx-6 mb-6">
         <HourlyDetails hourly={weather.current.hourly} today />
