@@ -36,10 +36,10 @@
       {@const previousCondition = hourly[2 * i].conditions}
       {@const newCondition = previousCondition !== condition}
       {@const width = (100 * (hourly[2 * i + 1].temperature - temperatureLow)) / (temperatureHigh - temperatureLow)}
-      <div style="height:{100 / 24}%;transform:translateY(2px);" class="font-bold grow flex items-top">
+      <div style="height:{100 / 24}%;transform:translateY(2px);" class="font-bold grow flex items-center">
         <span class="w-9 mr-2 inline-block text-right"><Timestamp value={timestamp} format="hour" /></span>
         <span class="font-normal italic mr-2 {newCondition ? 'block' : 'hidden'}">{newCondition ? condition : ''}</span>
-        <span class="min-w-fit inline-block border-solid border-b-[1px] border-slate-300 grow h-2/4" style="min-width: calc({width}% - 50px)"></span>
+        <hr class="h-px bg-gray-200 border-0 grow" style="min-width: calc({width}% - 50px);" />
       </div>
       <div style="height:{100 / 24}%">&nbsp;</div>
     {/each}
@@ -48,8 +48,8 @@
     {#each Array(12) as _, i}
       {@const temperature = hourly[2 * i].temperature}
       {@const width = (100 * (temperature - temperatureLow)) / (temperatureHigh - temperatureLow)}
-      <div style="height:{100 / 24}%;transform:translateY(2px);" class="grow flex items-top">
-        <span class="min-w-fit inline-block border-solid border-b-[1px] border-slate-300 h-2/4" style="min-width: calc({width}% - 50px);"></span>
+      <div style="height:{100 / 24}%;transform:translateY(2px);" class="grow flex items-center">
+        <hr class="h-px bg-gray-200 border-0" style="min-width: calc({width}% - 50px);" />
         <span class="ml-2" style="transform:translateY(-1px);"><Temperature pill value={temperature} /></span>
       </div>
       <div style="height:{100 / 24}%;">&nbsp;</div>
