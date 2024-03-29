@@ -1,3 +1,9 @@
+* v1.4.1 - 03/29/2024
+    * Fix last data point in today's hourly precipitation and hourly wind
+      charts.
+    * Improve current details layout on small screens.
+    * Upgrade to flowbite-svelte 0.44.24.
+
 * v1.4.0 - 09/23/2023
     * Add hourly wind chart.
     * Add hourly precipitation chart.
