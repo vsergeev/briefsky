@@ -141,6 +141,9 @@
         class="text-inherit dark:text-inherit mx-2 sm:mx-0"
       >
         {#each weather.daily as daily, i}
+          {@const nextHourly = weather.daily[i + 1]
+            ? weather.daily[i + 1].hourly.find((h) => h.timestamp > daily.hourly[daily.hourly.length - 1].timestamp)
+            : undefined}
           <AccordionItem
             class="!px-2 !py-3 md:!p-4"
             paddingDefault="py-4 px-4 md:px-14"
@@ -157,10 +160,10 @@
               <DailyDetails {daily} />
               <HourlyDetails hourly={daily.hourly} />
               {#if daily.hourly[0].precipitation_probability !== undefined && $configuration.showHourlyPrecipitation}
-                <HourlyPrecipitationChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
+                <HourlyPrecipitationChart index={i} hourly={nextHourly ? [...daily.hourly, nextHourly] : daily.hourly} />
               {/if}
               {#if daily.hourly[0].wind_speed !== undefined && $configuration.showHourlyWind}
-                <HourlyWindChart index={i} hourly={[...daily.hourly, ...(weather.daily[i + 1] ? [weather.daily[i + 1].hourly[0]] : [])]} />
+                <HourlyWindChart index={i} hourly={nextHourly ? [...daily.hourly, nextHourly] : daily.hourly} />
               {/if}
             </div>
           </AccordionItem>
