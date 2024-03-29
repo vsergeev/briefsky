@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { CurrentWeather, DailyWeather } from '../providers/Provider';
 
-  import ConditionsIcon from './scalars/ConditionsIcon.svelte';
-  import Timestamp from './scalars/Timestamp.svelte';
-  import TemperatureRange from './scalars/TemperatureRange.svelte';
+  import ConditionsIcon from './primitives/ConditionsIcon.svelte';
+  import Timestamp from './primitives/Timestamp.svelte';
+  import TemperatureRange from './primitives/TemperatureRange.svelte';
 
   export let current: CurrentWeather;
   export let daily: DailyWeather;

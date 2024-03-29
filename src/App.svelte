@@ -22,7 +22,7 @@
   import { ExampleProvider } from './providers/ExampleProvider';
   import { AutoExpand, configuration } from './Configuration';
 
-  import Timestamp from './components/scalars/Timestamp.svelte';
+  import Timestamp from './components/primitives/Timestamp.svelte';
   import CurrentDetails from './components/CurrentDetails.svelte';
   import DailySummary from './components/DailySummary.svelte';
   import DailyDetails from './components/DailyDetails.svelte';

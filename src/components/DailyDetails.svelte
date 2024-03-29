@@ -3,9 +3,9 @@
 
   import Icon from '@iconify/svelte';
 
-  import Conditions from './scalars/Conditions.svelte';
-  import Timestamp from './scalars/Timestamp.svelte';
-  import Amount from './scalars/Amount.svelte';
+  import Conditions from './primitives/Conditions.svelte';
+  import Timestamp from './primitives/Timestamp.svelte';
+  import Amount from './primitives/Amount.svelte';
 
   export let daily: DailyWeather;
 </script>

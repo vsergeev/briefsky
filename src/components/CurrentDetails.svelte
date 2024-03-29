@@ -1,14 +1,14 @@
 <script lang="ts">
   import type { CurrentWeather } from '../providers/Provider';
 
-  import Conditions from './scalars/Conditions.svelte';
-  import ConditionsIcon from './scalars/ConditionsIcon.svelte';
-  import Temperature from './scalars/Temperature.svelte';
-  import Wind from './scalars/Wind.svelte';
-  import RelativeHumidity from './scalars/RelativeHumidity.svelte';
-  import UVIndex from './scalars/UVIndex.svelte';
-  import Distance from './scalars/Distance.svelte';
-  import Pressure from './scalars/Pressure.svelte';
+  import Conditions from './primitives/Conditions.svelte';
+  import ConditionsIcon from './primitives/ConditionsIcon.svelte';
+  import Temperature from './primitives/Temperature.svelte';
+  import Wind from './primitives/Wind.svelte';
+  import RelativeHumidity from './primitives/RelativeHumidity.svelte';
+  import UVIndex from './primitives/UVIndex.svelte';
+  import Distance from './primitives/Distance.svelte';
+  import Pressure from './primitives/Pressure.svelte';
 
   export let current: CurrentWeather;
 </script>

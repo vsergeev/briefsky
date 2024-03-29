@@ -2,9 +2,9 @@
   import type { HourlyWeather } from '../providers/Provider';
   import { configuration, Units } from '../Configuration';
 
-  import { mmToIn } from './scalars/Amount.svelte';
+  import { mmToIn } from './primitives/Amount.svelte';
 
-  import HourlyLineChart from './scalars/HourlyLineChart.svelte';
+  import HourlyLineChart from './primitives/HourlyLineChart.svelte';
 
   /* Properties */
 

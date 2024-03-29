@@ -81,7 +81,7 @@ of currently unsupported weather providers:
 
 - [src/](src/) - Sources
   - [components/](src/components/) - Components
-    - [scalars/](src/components/scalars/) - Scalars
+    - [primitives/](src/components/primitives/) - Primitives
   - [providers/](src/providers/) - Weather Providers
 - [public/](public/) - Static assets
 - [index.html](index.html) - Top-level HTML

@@ -2,9 +2,9 @@
   import type { HourlyWeather } from '../providers/Provider';
   import { configuration, Units } from '../Configuration';
 
-  import { kphToMph, degreesToCardinal } from './scalars/Wind.svelte';
+  import { kphToMph, degreesToCardinal } from './primitives/Wind.svelte';
 
-  import HourlyLineChart from './scalars/HourlyLineChart.svelte';
+  import HourlyLineChart from './primitives/HourlyLineChart.svelte';
 
   /* Properties */
 

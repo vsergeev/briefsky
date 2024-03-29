@@ -2,8 +2,8 @@
   import { ConditionsIcon } from '../providers/Provider';
   import type { HourlyWeather } from '../providers/Provider';
 
-  import Temperature from './scalars/Temperature.svelte';
-  import Timestamp from './scalars/Timestamp.svelte';
+  import Temperature from './primitives/Temperature.svelte';
+  import Timestamp from './primitives/Timestamp.svelte';
 
   /* Properties */
 
