@@ -55,10 +55,10 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
     params['autoexpand'] === 'today'
       ? AutoExpand.Today
       : params['autoexpand'] === 'all'
-      ? AutoExpand.All
-      : params['autoexpand'] === 'none'
-      ? AutoExpand.None
-      : DEFAULT_CONFIGURATION.autoexpand;
+        ? AutoExpand.All
+        : params['autoexpand'] === 'none'
+          ? AutoExpand.None
+          : DEFAULT_CONFIGURATION.autoexpand;
   const refreshInterval = parseInt(params['refresh_interval']) || DEFAULT_CONFIGURATION.refreshInterval;
   const showHourlyPrecipitation =
     params['hourly_precipitation'] === undefined ? DEFAULT_CONFIGURATION.showHourlyPrecipitation : params['hourly_precipitation'] === 'true' ? true : false;

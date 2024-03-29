@@ -193,10 +193,10 @@ export class TomorrowIoProvider implements Provider {
               h.values.precipitationType === 1 || h.values.precipitationType === 3
                 ? PrecipitationType.Rain
                 : h.values.precipitationType === 2
-                ? PrecipitationType.Snow
-                : h.values.precipitationType === 3
-                ? PrecipitationType.Sleet
-                : PrecipitationType.None,
+                  ? PrecipitationType.Snow
+                  : h.values.precipitationType === 3
+                    ? PrecipitationType.Sleet
+                    : PrecipitationType.None,
           })),
       }))
       .filter((d: any) => d.hourly.length === 24);

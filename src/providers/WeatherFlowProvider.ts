@@ -114,10 +114,10 @@ export class WeatherFlowProvider implements Provider {
             h.precip_type === undefined
               ? PrecipitationType.None
               : h.precip_type === 'snow'
-              ? PrecipitationType.Snow
-              : h.precip_type === 'sleet'
-              ? PrecipitationType.Sleet
-              : PrecipitationType.Rain,
+                ? PrecipitationType.Snow
+                : h.precip_type === 'sleet'
+                  ? PrecipitationType.Sleet
+                  : PrecipitationType.Rain,
         })),
     }));
 

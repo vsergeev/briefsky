@@ -111,10 +111,10 @@ export class PirateWeatherProvider implements Provider {
               h.precipType === 'rain'
                 ? PrecipitationType.Rain
                 : h.precipType === 'snow'
-                ? PrecipitationType.Snow
-                : h.precipType === 'sleet'
-                ? PrecipitationType.Sleet
-                : PrecipitationType.None,
+                  ? PrecipitationType.Snow
+                  : h.precipType === 'sleet'
+                    ? PrecipitationType.Sleet
+                    : PrecipitationType.None,
           })),
       }))
       .filter((d: DailyWeather) => d.hourly.length === 24);

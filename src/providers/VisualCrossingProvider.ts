@@ -117,12 +117,12 @@ export class VisualCrossingProvider implements Provider {
               h.preciptype === null
                 ? PrecipitationType.None
                 : h.preciptype[0] === 'rain' || h.preciptype[0] === 'freezingrain'
-                ? PrecipitationType.Rain
-                : h.preciptype[0] === 'snow'
-                ? PrecipitationType.Snow
-                : h.preciptype[0] === 'ice'
-                ? PrecipitationType.Sleet
-                : PrecipitationType.None,
+                  ? PrecipitationType.Rain
+                  : h.preciptype[0] === 'snow'
+                    ? PrecipitationType.Snow
+                    : h.preciptype[0] === 'ice'
+                      ? PrecipitationType.Sleet
+                      : PrecipitationType.None,
           })),
       }));
 
