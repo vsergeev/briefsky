@@ -1,7 +1,7 @@
 {
   "name": "briefsky",
   "short_name": "briefsky",
-  "start_url": "https://briefsky.app/?storage=local",
+  "start_url": "/?storage=local",
   "display": "standalone",
   "background_color": "#f9fafb",
   "description": "A free weather frontend to a variety of weather providers.",
