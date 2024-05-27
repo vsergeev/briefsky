@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
 FROM node:22-alpine as build
+# Ensure git is installed for baking version number
+RUN apk add --no-cache git
 RUN mkdir /app
 WORKDIR /app
 # Copy app into build container and build release
