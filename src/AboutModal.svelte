@@ -16,7 +16,7 @@
   }
 </script>
 
-<Modal bind:open={modalOpen} title="About" autoclose class="w-full sm:w-2/3">
+<Modal bind:open={modalOpen} title="About" autoclose class="w-full sm:w-2/3" classHeader="text-gray-900 dark:text-white">
   <div class={textColorClass}>
     <p class="text-justify">
       <span class="font-semibold">briefsky</span> is a free weather frontend to a variety of weather providers, with an interface reminiscent of the late Dark Sky.

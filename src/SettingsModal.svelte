@@ -101,7 +101,7 @@
   }
 </script>
 
-<Modal bind:open={modalOpen} title="Settings" class="w-full sm:w-2/3">
+<Modal bind:open={modalOpen} title="Settings" class="w-full sm:w-2/3" classHeader="text-gray-900 dark:text-white">
   <div>
     <Tabs activeClasses="p-4 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-700 dark:text-primary-300" contentClass="mt-6">
       <TabItem open title="General">
