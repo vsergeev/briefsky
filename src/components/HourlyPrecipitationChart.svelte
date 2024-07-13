@@ -62,10 +62,10 @@
       tooltipFormatter: (value) => `${$configuration.units === Units.Imperial ? value.toFixed(2) : value.toFixed(1)} ${units}`,
       style: {
         tickClass: 'fill-green-600 dark:fill-green-300',
-        fillClass: 'fill-green-500 dark:fill-green-400 opacity-30',
+        fillClass: 'fill-green-500 dark:fill-green-400 [fill-opacity:30%]',
         strokeClass: 'stroke-green-600 dark:stroke-green-300 stroke-[4] md:stroke-2',
         tooltipClass: 'text-green-600 dark:text-green-300',
-        type: 'line',
+        type: 'bar',
         points: false,
         fill: true,
       },
