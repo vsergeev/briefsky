@@ -50,6 +50,7 @@
         fillClass: 'fill-gray-800 dark:fill-gray-200',
         strokeClass: 'stroke-gray-800 dark:stroke-gray-200 stroke-[4] md:stroke-1',
         tooltipClass: 'text-gray-800 dark:text-gray-200',
+        type: 'line',
         points: true,
         fill: false,
       },

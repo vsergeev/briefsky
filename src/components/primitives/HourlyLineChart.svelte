@@ -12,6 +12,7 @@
       fillClass: string;
       strokeClass: string;
       tooltipClass: string;
+      type: 'line' | 'bar';
       points: boolean;
       fill: boolean;
     };
@@ -33,7 +34,7 @@
   const pointRadius = 5;
   const xAxisMargin = 45;
   const xTickValueOffset = 10;
-  const yTickValueOffset = 5;
+  const yTickValueOffset = 7.5;
   const xPitch = width / 24;
   const yPitch = height / ticks;
   const hoverFillClass = 'fill-red-500 dark:fill-red-500';
@@ -123,29 +124,43 @@
 
       {#each datasets as dataset}
         <g>
-          <!-- Fill -->
-          {#if dataset.style.fill}
-            <g class={dataset.style.fillClass}>
+          {#if dataset.style.type === 'line'}
+            <!-- Lines -->
+            <g class={dataset.style.strokeClass}>
               {#each Array(dataset.values.length - 1) as _, i}
-                <polygon
-                  points="{i * xPitch},{height} {i * xPitch},{height - dataset.values[i] * (yPitch / (dataset.limit / ticks))}, {(i + 1) * xPitch + 0},{height -
-                    dataset.values[i + 1] * (yPitch / (dataset.limit / ticks))} {(i + 1) * xPitch},{height}"
+                <line
+                  x1={i * xPitch}
+                  y1={height - dataset.values[i] * (yPitch / (dataset.limit / ticks))}
+                  x2={(i + 1) * xPitch}
+                  y2={height - dataset.values[i + 1] * (yPitch / (dataset.limit / ticks))}
                 />
               {/each}
             </g>
-          {/if}
 
-          <!-- Lines -->
-          <g class={dataset.style.strokeClass}>
-            {#each Array(dataset.values.length - 1) as _, i}
-              <line
-                x1={i * xPitch}
-                y1={height - dataset.values[i] * (yPitch / (dataset.limit / ticks))}
-                x2={(i + 1) * xPitch}
-                y2={height - dataset.values[i + 1] * (yPitch / (dataset.limit / ticks))}
-              />
-            {/each}
-          </g>
+            <!-- Fill -->
+            {#if dataset.style.fill}
+              <g class={dataset.style.fillClass}>
+                {#each Array(dataset.values.length - 1) as _, i}
+                  <polygon
+                    points="{i * xPitch},{height} {i * xPitch},{height - dataset.values[i] * (yPitch / (dataset.limit / ticks))}, {(i + 1) * xPitch +
+                      0},{height - dataset.values[i + 1] * (yPitch / (dataset.limit / ticks))} {(i + 1) * xPitch},{height}"
+                  />
+                {/each}
+              </g>
+            {/if}
+          {:else if dataset.style.type === 'bar'}
+            <!-- Bars -->
+            <g class="{dataset.style.strokeClass} {dataset.style.fill ? dataset.style.fillClass : '[fill-opacity:0]'}">
+              {#each Array(dataset.values.length - 1) as _, i}
+                {#if dataset.values[i] > 0}
+                  <polyline
+                    points="{i * xPitch},{height} {i * xPitch},{height - dataset.values[i] * (yPitch / (dataset.limit / ticks))}
+                          {(i + 1) * xPitch},{height - dataset.values[i] * (yPitch / (dataset.limit / ticks))} {(i + 1) * xPitch},{height}"
+                  />
+                {/if}
+              {/each}
+            </g>
+          {/if}
 
           <!-- Data Points -->
           <g class={dataset.style.fillClass}>
