@@ -97,9 +97,11 @@
           <Button id="btn-refresh" on:click={refresh} color="none" class={navbarButtonClass}><Icon icon="radix-icons:reload" class="text-xl" /></Button>
         </div>
         <Button on:click={() => settingsModal.open()} color="none" class={navbarButtonClass}><Icon icon="radix-icons:gear" class="text-xl" /></Button>
-        <Button on:click={() => aboutModal.open()} color="none" class={navbarButtonClass}
-          ><Icon icon="radix-icons:question-mark-circled" class="text-xl" /></Button
-        >
+        <div class="hidden sm:block">
+          <Button on:click={() => aboutModal.open()} color="none" class={navbarButtonClass}
+            ><Icon icon="radix-icons:question-mark-circled" class="text-xl" /></Button
+          >
+        </div>
         <DarkMode class={navbarButtonClass} />
       </div>
     </div>
