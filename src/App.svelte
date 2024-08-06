@@ -79,11 +79,11 @@
         <span class="font-semibold">Example Weather Provider</span> — Please configure a weather provider in the settings.
       </Alert>
     {/if}
-    <div class="mx-auto grid grid-cols-2 md:grid-cols-6 items-center container">
+    <div class="mx-auto grid grid-cols-3 items-center container">
       <div>
         <a class="leading-none text-xl font-semibold" href={window.location.href}>briefsky</a>
       </div>
-      <div class="hidden md:block col-span-4 text-center">
+      <div class="hidden md:block text-center">
         <span class="font-light">
           {#if $configuration.title}
             {$configuration.title} - <Timestamp format="long" value={weather ? weather.current.timestamp : new Date()} />
@@ -91,6 +91,9 @@
             <Timestamp format="long" value={weather ? weather.current.timestamp : new Date()} />
           {/if}
         </span>
+      </div>
+      <div class="block md:hidden text-center">
+        <span class="font-light"><Timestamp format="short" value={weather ? weather.current.timestamp : new Date()} /></span>
       </div>
       <div class="flex justify-end">
         <div class="hidden sm:block">
