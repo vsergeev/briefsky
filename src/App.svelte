@@ -58,11 +58,6 @@
     console.log('briefsky version', `v${window.__APP_VERSION__}-${window.__APP_COMMIT_ID__}`);
     console.log('Configuration', $configuration);
 
-    /* Update page title */
-    if ($configuration.title) {
-      document.title = `briefsky - ${$configuration.title}`;
-    }
-
     /* Get location if required */
     const location = ($configuration.providerFactory.requiresLocation && ($configuration.location || (await Location.fromGeolocation()))) || undefined;
 
@@ -82,6 +77,13 @@
       } catch (err) {
         console.error(err);
       }
+    }
+
+    /* Update page title */
+    if ($configuration.title) {
+      document.title = `briefsky - ${$configuration.title}`;
+    } else if (locationName) {
+      document.title = `briefsky - ${locationName}`;
     }
   });
 </script>
