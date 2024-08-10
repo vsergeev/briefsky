@@ -1,7 +1,9 @@
 import { readable } from 'svelte/store';
 
 import type { ProviderFactory } from './providers/Provider';
+import type { GeocoderFactory } from './geocoders/Geocoder';
 import { Location } from './providers/Location';
+import { NominatimGeocoder } from './geocoders/NominatimGeocoder';
 import { OpenMeteoProvider } from './providers/OpenMeteoProvider';
 import { ProviderFactories } from './providers';
 
@@ -24,6 +26,7 @@ export enum AutoExpand {
 export interface Configuration {
   providerFactory: ProviderFactory;
   providerParams: { [key: string]: string };
+  geocoderFactory: GeocoderFactory;
   location: Location | undefined;
   units: Units;
   autoexpand: AutoExpand;
@@ -36,6 +39,7 @@ export interface Configuration {
 const DEFAULT_CONFIGURATION: Configuration = {
   providerFactory: OpenMeteoProvider,
   providerParams: {},
+  geocoderFactory: NominatimGeocoder,
   location: undefined,
   units: new Intl.Locale(window.navigator.language).region === 'US' ? Units.Imperial : Units.Metric,
   autoexpand: AutoExpand.Today,
@@ -48,6 +52,7 @@ const DEFAULT_CONFIGURATION: Configuration = {
 function decodeConfiguration(params: { [key: string]: string }): Configuration {
   const providerFactory = ProviderFactories.find((e) => e.id === params['provider']) || DEFAULT_CONFIGURATION.providerFactory;
   const providerParams = Object.fromEntries(providerFactory.fields.map((f: { name: string }) => [f.name, params[f.name]]));
+  const geocoderFactory = DEFAULT_CONFIGURATION.geocoderFactory;
   const location = Location.fromString(params['location']) || DEFAULT_CONFIGURATION.location;
   const title = params['title'] || DEFAULT_CONFIGURATION.title;
   const units = params['units'] === 'metric' ? Units.Metric : params['units'] === 'imperial' ? Units.Imperial : DEFAULT_CONFIGURATION.units;
@@ -67,6 +72,7 @@ function decodeConfiguration(params: { [key: string]: string }): Configuration {
   return {
     providerFactory,
     providerParams,
+    geocoderFactory,
     location,
     title,
     units,

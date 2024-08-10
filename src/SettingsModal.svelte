@@ -81,6 +81,7 @@
     let configuration: Configuration = {
       providerFactory,
       providerParams,
+      geocoderFactory: currentConfiguration.geocoderFactory,
       location: (providerFactory.requiresLocation && locationMode === LocationMode.Coordinates && location.valid() && location) || undefined,
       units,
       autoexpand,
