@@ -48,7 +48,7 @@ export class PirateWeatherProvider implements Provider {
     try {
       data = await response.json();
     } catch (e) {
-      throw new Error(`Fetching from Pirate Weather: Unexpected response data.`);
+      throw new Error(`Fetching from Pirate Weather: Unexpected response data: ${e.toString()}`);
     }
 
     if (!response.ok) {

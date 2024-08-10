@@ -129,7 +129,7 @@ export class OpenMeteoProvider implements Provider {
     try {
       data = await response.json();
     } catch (e) {
-      throw new Error(`Fetching from Open-Meteo: Unexpected response data.`);
+      throw new Error(`Fetching from Open-Meteo: Unexpected response data: ${e.toString()}`);
     }
 
     if (!response.ok) {
