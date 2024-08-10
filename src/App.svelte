@@ -102,11 +102,7 @@
       </div>
       <div class="hidden md:block text-center">
         <span class="font-light">
-          {#if $configuration.title}
-            {$configuration.title} - <Timestamp format="long" value={weather ? weather.current.timestamp : new Date()} />
-          {:else}
-            <Timestamp format="long" value={weather ? weather.current.timestamp : new Date()} />
-          {/if}
+          <Timestamp format="long" value={weather ? weather.current.timestamp : new Date()} />
         </span>
       </div>
       <div class="block md:hidden text-center">
@@ -138,9 +134,9 @@
 
   <div class="container mx-auto">
     {#if weather}
-      {#if locationName}
+      {#if locationName || $configuration.title}
         <div class="w-full text-center">
-          <span class="font-semibold text-base">{locationName}</span>
+          <span class="font-semibold text-base">{locationName || $configuration.title}</span>
         </div>
       {/if}
       <div class="mb-4 md:mb-6">
