@@ -1,3 +1,13 @@
+* v1.5.0 - 08/10/2024
+    * Add geocoding support.
+    * Add reverse geocoded location name to page top and title.
+    * Move configuration title from navigation bar to page top.
+    * Show abbreviated timestamp in navigation bar on small screens.
+    * Hide about button in navigation bar on small screens.
+    * Use bar chart for amounts in hourly precipitation chart.
+    * Improve current details layout on small screens.
+    * Upgrade to flowbite-svelte 0.46.15.
+
 * v1.4.1 - 03/29/2024
     * Fix last data point in today's hourly precipitation and hourly wind
       charts.
