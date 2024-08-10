@@ -1,3 +1,6 @@
+* v1.5.1 - 08/10/2024
+    * Parallelize weather and geocoding lookups.
+
 * v1.5.0 - 08/10/2024
     * Add geocoding support.
     * Add reverse geocoded location name to page top and title.
