@@ -5,6 +5,7 @@
   import Icon from '@iconify/svelte';
 
   import type { ProviderFactory, Provider, Weather } from './providers/Provider';
+  import type { Geocoder } from './geocoders/Geocoder';
   import { Location } from './providers/Location';
   import { ExampleProvider } from './providers/ExampleProvider';
   import { AutoExpand, configuration } from './Configuration';
@@ -24,7 +25,9 @@
 
   /* State */
   let provider: Provider;
+  let geocoder: Geocoder;
   let weather: Weather | undefined;
+  let locationName: string | undefined;
   let error: string | undefined;
   let nextRefreshTimestamp: Date;
   let settingsModal: SettingsModal;
@@ -66,8 +69,20 @@
     /* Instantiate provider */
     provider = $configuration.providerFactory.fromParams($configuration.providerParams, location) || new ExampleProvider();
 
+    /* Instantiate geocoder */
+    geocoder = new $configuration.geocoderFactory();
+
     /* Fetch weather */
     await refresh();
+
+    /* Reverse geocode location */
+    if (location) {
+      try {
+        locationName = await geocoder.reverseGeocode(location);
+      } catch (err) {
+        console.error(err);
+      }
+    }
   });
 </script>
 
@@ -121,6 +136,11 @@
 
   <div class="container mx-auto">
     {#if weather}
+      {#if locationName}
+        <div class="w-full text-center">
+          <span class="font-semibold text-base">{locationName}</span>
+        </div>
+      {/if}
       <div class="mb-4 md:mb-6">
         <CurrentDetails current={weather.current} />
       </div>
@@ -178,10 +198,19 @@
 
     <div class="grid place-items-center mt-3">
       {#if provider && getProviderFactory(provider).attribution}
-        <div class="mb-3 text-sm">
-          Weather data by <a href={getProviderFactory(provider).attribution} target="_blank" rel="noreferrer" class="hover:underline"
-            >{getProviderFactory(provider).description}</a
-          >
+        <div class="mb-3 text-center text-sm">
+          <div>
+            Weather data by <a href={getProviderFactory(provider).attribution} target="_blank" rel="noreferrer" class="hover:underline"
+              >{getProviderFactory(provider).description}</a
+            >
+          </div>
+          {#if locationName && $configuration.geocoderFactory.attribution}
+            <div>
+              Location data by <a href={$configuration.geocoderFactory.attribution} target="_blank" rel="noreferrer" class="hover:underline"
+                >{$configuration.geocoderFactory.description}</a
+              >
+            </div>
+          {/if}
         </div>
       {/if}
       <div class="mb-3">
