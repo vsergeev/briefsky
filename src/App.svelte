@@ -68,7 +68,7 @@
     geocoder = new $configuration.geocoderFactory();
 
     /* Fetch weather */
-    await refresh();
+    refresh();
 
     /* Reverse geocode location */
     if (location) {
