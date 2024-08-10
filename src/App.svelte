@@ -31,7 +31,7 @@
   let aboutModal: AboutModal;
 
   /* Provider Factory getter */
-  const providerFactory = (provider: Provider) => provider.constructor as unknown as ProviderFactory;
+  const getProviderFactory = (provider: Provider) => provider.constructor as unknown as ProviderFactory;
 
   async function refresh() {
     /* Fetch weather */
@@ -73,7 +73,7 @@
 
 <main class="text-gray-800 dark:text-gray-200 text-sm md:text-base">
   <nav class="text-gray-700 dark:text-gray-300 px-4 py-2.5 w-full">
-    {#if provider && providerFactory(provider) === ExampleProvider}
+    {#if provider && getProviderFactory(provider) === ExampleProvider}
       <Alert class="bg-gray-100 dark:bg-gray-700 mx-auto container mb-2" color="dark" border dismissable>
         <span slot="icon"><Icon icon="radix-icons:exclamation-triangle" class="text-lg" /></span>
         <span class="font-semibold">Example Weather Provider</span> — Please configure a weather provider in the settings.
@@ -177,10 +177,10 @@
     {/if}
 
     <div class="grid place-items-center mt-3">
-      {#if provider && providerFactory(provider).attribution !== undefined}
+      {#if provider && getProviderFactory(provider).attribution}
         <div class="mb-3 text-sm">
-          Weather data by <a href={providerFactory(provider).attribution} target="_blank" rel="noreferrer" class="hover:underline"
-            >{providerFactory(provider).description}</a
+          Weather data by <a href={getProviderFactory(provider).attribution} target="_blank" rel="noreferrer" class="hover:underline"
+            >{getProviderFactory(provider).description}</a
           >
         </div>
       {/if}
