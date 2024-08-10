@@ -83,7 +83,9 @@ of currently unsupported weather providers:
   - [components/](src/components/) - Components
     - [primitives/](src/components/primitives/) - Primitives
   - [providers/](src/providers/) - Weather Providers
+  - [geocoders/](src/geocoders/) - Location Geocoders
 - [public/](public/) - Static assets
+- [contrib/](contrib/) - Contributed files
 - [index.html](index.html) - Top-level HTML
 - [package.json](package.json) - npm package configuration
 - [package-lock.json](package-lock.json) - npm package lock
@@ -93,7 +95,7 @@ of currently unsupported weather providers:
 - [svelte.config.js](svelte.config.js) - Svelte configuration
 - [postcss.config.cjs](postcss.config.cjs) - PostCSS configuration
 - [tailwind.config.cjs](tailwind.config.cjs) - Tailwind configuration
-- [CHANGELOG](CHANGELOG.md) - Change log
+- [CHANGELOG.md](CHANGELOG.md) - Change log
 - [LICENSE](LICENSE) - MIT License
 - [README.md](README.md) - This README
 
