@@ -30,6 +30,7 @@
   let locationName: string | undefined;
   let error: string | undefined;
   let nextRefreshTimestamp: Date;
+  let refreshTimeout: number | undefined;
   let settingsModal: SettingsModal;
   let aboutModal: AboutModal;
 
@@ -37,6 +38,9 @@
   const getProviderFactory = (provider: Provider) => provider.constructor as unknown as ProviderFactory;
 
   async function refresh() {
+    /* Clear existing refresh timeout */
+    clearTimeout(refreshTimeout);
+
     /* Fetch weather */
     try {
       weather = await provider.fetch();
@@ -50,7 +54,7 @@
     nextRefreshTimestamp = new Date(Date.now() + $configuration.refreshInterval * 1000);
 
     /* Setup timer for next refresh */
-    setTimeout(refresh, $configuration.refreshInterval * 1000);
+    refreshTimeout = setTimeout(refresh, $configuration.refreshInterval * 1000);
   }
 
   onMount(async () => {
