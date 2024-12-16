@@ -32,11 +32,18 @@
   let nextRefreshTimestamp: Date;
   let settingsModal: SettingsModal;
   let aboutModal: AboutModal;
+  let activeRefreshTimeout: number | undefined;
 
   /* Provider Factory getter */
   const getProviderFactory = (provider: Provider) => provider.constructor as unknown as ProviderFactory;
 
   async function refresh() {
+    /* Convert refresh interval to ms */
+    const refreshIntervalMs = $configuration.refreshInterval * 1000;
+
+    /* Clear existing refresh timer, allows undefined */
+    clearTimeout(activeRefreshTimeout);
+
     /* Fetch weather */
     try {
       weather = await provider.fetch();
@@ -47,10 +54,10 @@
     }
 
     /* Compute next refresh timestamp */
-    nextRefreshTimestamp = new Date(Date.now() + $configuration.refreshInterval * 1000);
+    nextRefreshTimestamp = new Date(Date.now() + refreshIntervalMs);
 
-    /* Setup timer for next refresh */
-    setTimeout(refresh, $configuration.refreshInterval * 1000);
+    /* Setup timer for next refresh and store the ID */
+    activeRefreshTimeout = setTimeout(refresh, refreshIntervalMs);
   }
 
   onMount(async () => {
