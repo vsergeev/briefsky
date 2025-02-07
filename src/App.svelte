@@ -173,7 +173,7 @@
             />
             <div class="grid gap-y-4 mb-2">
               <DailyDetails {daily} />
-              <HourlyDetails hourly={daily.hourly} />
+              <HourlyDetails hourly={nextHourly ? [...daily.hourly, nextHourly] : daily.hourly} />
               {#if daily.hourly[0].precipitation_probability !== undefined && $configuration.showHourlyPrecipitation}
                 <HourlyPrecipitationChart index={i} hourly={nextHourly ? [...daily.hourly, nextHourly] : daily.hourly} />
               {/if}
