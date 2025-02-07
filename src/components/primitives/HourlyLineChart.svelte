@@ -73,12 +73,12 @@
 
       <!-- X Axis Tick Values (Hours) -->
       <g class="fill-gray-800 dark:fill-gray-200 text-5xl sm:text-4xl md:text-2xl lg:text-xl">
-        {#each [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22] as i}
-          {@const hour = timestamps[i].getHours()}
+        {#each [...Array(25).fill(0).keys()].filter((i) => i % 2 === 0) as i}
+          {@const hour = timestamps[i] ? timestamps[i].getHours() : (timestamps[0].getHours() + i) % 24}
           <text
             x={i * xPitch}
             y={height + tickLength + xTickValueOffset}
-            text-anchor={i === 0 ? 'start' : 'middle'}
+            text-anchor={i === 0 ? 'start' : i === 24 ? 'end' : 'middle'}
             dominant-baseline="hanging"
             class={i === 2 || i === 6 || i === 10 || i === 14 || i === 18 || i === 22 ? 'block' : 'hidden md:block'}
             >{(hour % 12 || 12) + (hour < 12 ? 'am' : 'pm')}</text
