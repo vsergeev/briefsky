@@ -81,7 +81,7 @@ export class WeatherFlowProvider implements Provider {
       uv_index: data.current_conditions.uv,
       visibility: undefined,
       hourly: data.forecast.hourly
-        .filter((h: any) => h.time >= data.current_conditions.time && h.time < data.current_conditions.time + 86400)
+        .filter((h: any) => h.time >= data.current_conditions.time && h.time < data.current_conditions.time + 90000)
         .map((h: any) => ({
           timestamp: new Date(h.time * 1000),
           conditions: h.conditions,

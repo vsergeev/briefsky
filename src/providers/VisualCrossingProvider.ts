@@ -80,7 +80,7 @@ export class VisualCrossingProvider implements Provider {
       visibility: data.currentConditions.visibility,
       hourly: data.days[0].hours
         .concat(data.days[1].hours)
-        .filter((h: any) => h.datetimeEpoch >= data.currentConditions.datetimeEpoch && h.datetimeEpoch < data.currentConditions.datetimeEpoch + 86400)
+        .filter((h: any) => h.datetimeEpoch >= data.currentConditions.datetimeEpoch && h.datetimeEpoch < data.currentConditions.datetimeEpoch + 90000)
         .map((h: any) => ({
           timestamp: new Date(h.datetimeEpoch * 1000),
           conditions: h.conditions,

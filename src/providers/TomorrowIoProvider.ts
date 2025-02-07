@@ -153,7 +153,7 @@ export class TomorrowIoProvider implements Provider {
       uv_index: currentData.values.uvIndex,
       visibility: currentData.values.visibility,
       hourly: hourlyData
-        .filter((h: any) => dateToTimestamp(h.startTime) >= dateToTimestamp(currentTime) && dateToTimestamp(h.startTime) < dateToTimestamp(currentTime) + 86400)
+        .filter((h: any) => dateToTimestamp(h.startTime) >= dateToTimestamp(currentTime) && dateToTimestamp(h.startTime) < dateToTimestamp(currentTime) + 90000)
         .map((h: any) => ({
           timestamp: new Date(h.startTime),
           conditions: CONDITIONS_TEXT_MAP[h.values.weatherCode] ?? 'Unknown',

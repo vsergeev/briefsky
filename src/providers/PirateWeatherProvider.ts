@@ -71,7 +71,7 @@ export class PirateWeatherProvider implements Provider {
       visibility: data.currently.visibility,
       uv_index: Math.round(data.currently.uvIndex),
       hourly: data.hourly.data
-        .filter((h: any) => h.time >= data.currently.time && h.time < data.currently.time + 86400)
+        .filter((h: any) => h.time >= data.currently.time && h.time < data.currently.time + 90000)
         .map((h: any) => ({
           timestamp: new Date(h.time * 1000),
           conditions: h.summary,

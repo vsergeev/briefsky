@@ -163,7 +163,7 @@ export class OpenMeteoProvider implements Provider {
       pressure: data.hourly.pressure_msl[currentHourlyIndex],
       visibility: data.hourly.visibility[currentHourlyIndex] / 1000,
       hourly: hourlyData
-        .filter((h: any) => h.time >= data.current_weather.time && h.time < data.current_weather.time + 86400)
+        .filter((h: any) => h.time >= data.current_weather.time && h.time < data.current_weather.time + 90000)
         .map((h: any) => ({
           timestamp: new Date(h.time * 1000),
           conditions: CONDITIONS_TEXT_MAP[h.weathercode] ?? 'Unknown',

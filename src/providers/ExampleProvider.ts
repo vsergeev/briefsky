@@ -169,6 +169,12 @@ export class ExampleProvider implements Provider {
             conditions_icon: 0,
             temperature: 17.3,
           },
+          {
+            timestamp: new Date('2023-09-18T01:00:00.000Z'),
+            conditions: 'Clear Sky',
+            conditions_icon: 0,
+            temperature: 15.7,
+          },
         ],
       },
       daily: [
