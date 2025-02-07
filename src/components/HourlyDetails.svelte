@@ -82,7 +82,7 @@
   $: {
     /* Aggregate conditions into contiguous regions */
     aggregation = [];
-    for (const entry of hourly) {
+    for (const entry of hourly.slice(0, 24)) {
       const conditions = ICON_MAP[entry.conditions_icon] ?? HourlyConditions.Unknown;
       if (aggregation.length === 0 || aggregation[aggregation.length - 1].conditions !== conditions) {
         aggregation.push({ conditions: conditions, duration: 1 });
@@ -128,7 +128,11 @@
         </div>
       </div>
     {/each}
-    <div style="width: {100 / 24}%;" />
+    <div style="width: {100 / 24}%;">
+      <div class="hidden md:block text-right">
+        <Timestamp value={hourly[24] ? hourly[24].timestamp : new Date(hourly[0].timestamp.getTime() + 86400 * 1000)} format="hour" />
+      </div>
+    </div>
   </div>
   <div class="flex w-full text-base sm:text-lg font-light text-black dark:text-white">
     <div style="width: {100 / 24}%; opacity: {temperatureOpacity(hourly[0].temperature)};">
@@ -144,6 +148,14 @@
         </div>
       </div>
     {/each}
-    <div style="width: {100 / 24}%;" />
+    {#if hourly[24]}
+      <div style="width: {100 / 24}%; opacity: {temperatureOpacity(hourly[24].temperature)};">
+        <div class="hidden md:block text-right">
+          <Temperature value={hourly[24].temperature} />
+        </div>
+      </div>
+    {:else}
+      <div style="width: {100 / 24}%;" />
+    {/if}
   </div>
 </div>
