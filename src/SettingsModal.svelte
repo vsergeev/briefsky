@@ -6,7 +6,7 @@
   import { Location } from './providers/Location';
   import { Units, AutoExpand, loadConfiguration, storeConfiguration } from './Configuration';
 
-  import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Button, ButtonGroup, Spinner, Radio, Checkbox } from 'flowbite-svelte';
+  import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Tooltip, Button, ButtonGroup, Spinner, Radio, Checkbox } from 'flowbite-svelte';
   import Icon from '@iconify/svelte';
 
   enum LocationMode {
@@ -153,6 +153,9 @@
                   disabled={locationMode === LocationMode.Geolocation}
                   placeholder="Longitude (decimal)"
                 />
+                {#if locationMode === LocationMode.Coordinates}
+                  <Tooltip type="auto" triggeredBy="#btn-locate">Geolocate</Tooltip>
+                {/if}
                 <Button
                   id="btn-locate"
                   on:click={handleLocate}
