@@ -164,7 +164,7 @@
             {/each}
           {/if}
 
-          <Hr class="mt-2" height="h-px" />
+          <Hr />
 
           {#if providerFactory.requiresLocation}
             <div>
