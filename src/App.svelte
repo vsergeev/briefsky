@@ -185,7 +185,7 @@
         {/each}
       </Accordion>
     {:else if error}
-      <Alert class="text-lg w-3/4 my-6 mx-auto" color="red">
+      <Alert color="red" class="text-lg w-3/4 my-6 mx-auto dark:text-gray-200 dark:bg-red-800">
         <span slot="icon"><Icon icon="mdi:error-outline" class="text-2xl" /></span>
         <span class="font-semibold">Error fetching weather: </span>{error}
       </Alert>
