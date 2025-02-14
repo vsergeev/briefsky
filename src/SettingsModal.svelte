@@ -4,6 +4,7 @@
 
   import { ProviderFactories } from './providers';
   import { Location } from './providers/Location';
+  import type { Geocoder, LocationCandidate } from './geocoders/Geocoder';
   import { Units, AutoExpand, loadConfiguration, storeConfiguration } from './Configuration';
 
   import { Modal, Tabs, TabItem, Label, Select, Input, Hr, Tooltip, Button, ButtonGroup, Spinner, Radio, Checkbox } from 'flowbite-svelte';
@@ -30,6 +31,15 @@
   let showHourlyWind: boolean;
   let valid: boolean;
 
+  /* Location Search State */
+  let geocoder: Geocoder;
+  let locationSearch: { query: string; loading: boolean; open: boolean; results: LocationCandidate[] } = {
+    query: '',
+    loading: false,
+    open: false,
+    results: [],
+  };
+
   /* Geolocation Loading State */
   let locationGeolocationLoading: boolean = false;
 
@@ -37,7 +47,9 @@
     currentConfiguration = loadConfiguration();
 
     providerFactory = currentConfiguration.providerFactory;
+    geocoder = new currentConfiguration.geocoderFactory();
     locationMode = currentConfiguration.location ? LocationMode.Coordinates : LocationMode.Geolocation;
+    locationSearch = { query: '', loading: false, open: false, results: [] };
     location = currentConfiguration.location || new Location('', '');
     units = currentConfiguration.units;
     autoexpand = currentConfiguration.autoexpand;
@@ -55,6 +67,32 @@
       providerFactory === currentConfiguration.providerFactory
         ? Object.fromEntries(providerFactory.fields.map((f) => [f.name, currentConfiguration.providerParams[f.name]]))
         : Object.fromEntries(providerFactory.fields.map((f) => [f.name, '']));
+  }
+
+  async function handleSearch() {
+    if (locationSearch.query === '') return;
+
+    locationSearch.loading = true;
+    try {
+      locationSearch.results = await geocoder.forwardGeocode(locationSearch.query);
+    } catch (err) {
+      locationSearch.results = [];
+      console.error(err);
+    }
+    locationSearch.loading = false;
+    locationSearch.open = true;
+  }
+
+  async function handleSearchResult(result: LocationCandidate) {
+    locationSearch.query = result.name;
+    locationSearch.open = false;
+    location = result.location;
+  }
+
+  function handleClickOutside(event: MouseEvent) {
+    if (locationSearch.open && !event.composedPath().includes(document.getElementById('dropdown-search')!)) {
+      locationSearch.open = false;
+    }
   }
 
   async function handleGeolocation() {
@@ -101,7 +139,8 @@
 </script>
 
 <Modal bind:open={modalOpen} title="Settings" class="w-full sm:w-2/3" classHeader="text-gray-900 dark:text-white">
-  <div>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div on:mousedown={handleClickOutside}>
     <Tabs activeClasses="p-4 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-700 dark:text-primary-300" contentClass="mt-6">
       <TabItem open title="General">
         <div class="space-y-4">
@@ -139,6 +178,38 @@
             {#if locationMode === LocationMode.Coordinates}
               <div class="w-full">
                 <Label for="group-search" class="mb-2">Coordinates</Label>
+
+                <form on:submit|preventDefault={handleSearch}>
+                  <ButtonGroup id="group-search" class="w-full mb-2">
+                    <Input id="input-search" autocomplete="off" bind:value={locationSearch.query} placeholder="Search locations..." />
+                    <Button id="btn-search" type="submit" disabled={locationSearch.loading} size="sm" outline class="!p-3" color="light">
+                      {#if locationSearch.loading}
+                        <Spinner size="5" color="gray" />
+                      {:else}
+                        <Icon icon="radix-icons:magnifying-glass" class="text-lg" />
+                      {/if}
+                    </Button>
+                  </ButtonGroup>
+                </form>
+
+                {#if locationSearch.open}
+                  <div id="dropdown-search" class="relative">
+                    <div
+                      class="absolute w-full py-2 max-h-48 overflow-y-auto overscroll-contain rounded-lg shadow-lg text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700"
+                    >
+                      {#if locationSearch.results.length === 0}
+                        <div class="w-full px-4 text-left">No results found.</div>
+                      {:else}
+                        {#each locationSearch.results as result}
+                          <button class="w-full px-4 py-2 text-left hover:bg-primary-600 hover:text-white" on:click={() => handleSearchResult(result)}
+                            >{result.name}</button
+                          >
+                        {/each}
+                      {/if}
+                    </div>
+                  </div>
+                {/if}
+
                 <div on:paste={handlePaste}>
                   <ButtonGroup id="group-location" class="w-full">
                     <Input id="input-latitude" bind:value={location.latitude} placeholder="Latitude (decimal)" />
