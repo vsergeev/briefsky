@@ -19,7 +19,7 @@
   <div class="text-right min-w-fit" style="min-width: {margin_left === 0 ? 'min-content' : `${margin_left}%`};">
     <Temperature value={low} />
   </div>
-  <div class="bg-gray-800 dark:bg-gray-400 my-0.5 mx-1.5 rounded-xl" style="width: {100 - margin_right - margin_left}%;" />
+  <div class="bg-gray-800 dark:bg-gray-400 my-0.5 mx-1.5 rounded-xl" style="width: {100 - margin_right - margin_left}%;"></div>
   <div style="max-width: {margin_right}%;">
     <Temperature value={high} />
   </div>

@@ -111,7 +111,7 @@
   </div>
   <div class="flex w-full mb-1">
     {#each Array(25) as _, i}
-      <div class="{i % 2 === 0 ? 'h-[8px]' : 'h-[5px]'} border-l border-gray-400" style="width: {i < 24 ? 100 / 24 : 0}%;" />
+      <div class="{i % 2 === 0 ? 'h-[8px]' : 'h-[5px]'} border-l border-gray-400" style="width: {i < 24 ? 100 / 24 : 0}%;"></div>
     {/each}
   </div>
   <div class="flex w-full text-xs sm:text-sm">
@@ -155,7 +155,7 @@
         </div>
       </div>
     {:else}
-      <div style="width: {100 / 24}%;" />
+      <div style="width: {100 / 24}%;"></div>
     {/if}
   </div>
 </div>
