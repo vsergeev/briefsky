@@ -33,13 +33,6 @@
   /* Geolocation Loading State */
   let locationGeolocationLoading: boolean = false;
 
-  function updateProviderParams() {
-    providerParams =
-      providerFactory === currentConfiguration.providerFactory
-        ? Object.fromEntries(providerFactory.fields.map((f) => [f.name, currentConfiguration.providerParams[f.name]]))
-        : Object.fromEntries(providerFactory.fields.map((f) => [f.name, '']));
-  }
-
   export function open() {
     currentConfiguration = loadConfiguration();
 
@@ -52,9 +45,16 @@
     showHourlyPrecipitation = currentConfiguration.showHourlyPrecipitation;
     showHourlyWind = currentConfiguration.showHourlyWind;
 
-    updateProviderParams();
+    handleProviderChange();
 
     modalOpen = true;
+  }
+
+  function handleProviderChange() {
+    providerParams =
+      providerFactory === currentConfiguration.providerFactory
+        ? Object.fromEntries(providerFactory.fields.map((f) => [f.name, currentConfiguration.providerParams[f.name]]))
+        : Object.fromEntries(providerFactory.fields.map((f) => [f.name, '']));
   }
 
   async function handleGeolocation() {
@@ -111,7 +111,7 @@
               id="select-provider"
               items={ProviderFactories.map((provider) => ({ name: provider.description, value: provider }))}
               bind:value={providerFactory}
-              on:change={updateProviderParams}
+              on:change={handleProviderChange}
               placeholder="Select Provider"
             />
           </div>
