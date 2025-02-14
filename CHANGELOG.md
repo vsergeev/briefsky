@@ -1,3 +1,12 @@
+* v1.6.0 - 02/14/2025
+    * Fix refresh timeout accumulation bug.
+    * Show 25th hour data in hourly details and charts.
+    * Improve warning message for missing location.
+    * Add location search to settings.
+    * Upgrade to Svelte 5, Vite 6, and flowbite-svelte 0.47.4.
+    * Contributors
+        * Tomas Savigliano (@ralusek) - 193bdca
+
 * v1.5.1 - 08/10/2024
     * Parallelize weather and geocoding lookups.
 
