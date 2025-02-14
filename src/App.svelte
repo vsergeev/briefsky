@@ -26,8 +26,9 @@
   /* State */
   let provider: Provider;
   let geocoder: Geocoder;
-  let weather: Weather | undefined;
+  let location: Location | undefined;
   let locationName: string | undefined;
+  let weather: Weather | undefined;
   let error: string | undefined;
   let nextRefreshTimestamp: Date;
   let refreshTimeout: number | undefined;
@@ -63,7 +64,7 @@
     console.log('Configuration', $configuration);
 
     /* Get location if required */
-    const location = ($configuration.providerFactory.requiresLocation && ($configuration.location || (await Location.fromGeolocation()))) || undefined;
+    location = ($configuration.providerFactory.requiresLocation && ($configuration.location || (await Location.fromGeolocation()))) || undefined;
 
     /* Instantiate provider */
     provider = $configuration.providerFactory.fromParams($configuration.providerParams, location) || new ExampleProvider();
@@ -97,7 +98,12 @@
     {#if provider && getProviderFactory(provider) === ExampleProvider}
       <Alert class="bg-gray-100 dark:bg-gray-700 mx-auto container mb-2" color="dark" border dismissable>
         <span slot="icon"><Icon icon="radix-icons:exclamation-triangle" class="text-lg" /></span>
-        <span class="font-semibold">Example Weather Provider</span> — Please configure a weather provider in the settings.
+        <span class="font-semibold">Example Weather Provider</span> —
+        {#if $configuration.providerFactory === ExampleProvider}
+          Please configure a weather provider in the settings.
+        {:else if location === undefined}
+          Missing location. Please enable geolocation or configure a location in the settings.
+        {/if}
       </Alert>
     {/if}
     <div class="mx-auto grid grid-cols-3 items-center container">
