@@ -30,8 +30,8 @@
   let showHourlyWind: boolean;
   let valid: boolean;
 
-  /* Loading State for location */
-  let locationLoading: boolean = false;
+  /* Geolocation Loading State */
+  let locationGeolocationLoading: boolean = false;
 
   function updateProviderParams() {
     providerParams =
@@ -57,15 +57,13 @@
     modalOpen = true;
   }
 
-  async function handleLocate() {
-    locationLoading = true;
+  async function handleGeolocation() {
+    locationGeolocationLoading = true;
     location = (await Location.fromGeolocation()) || location;
-    locationLoading = false;
+    locationGeolocationLoading = false;
   }
 
   function handlePaste(event: ClipboardEvent) {
-    if (locationMode !== LocationMode.Coordinates) return;
-
     const decodedLocation = Location.fromString(event.clipboardData ? event.clipboardData.getData('text') : undefined);
     if (decodedLocation && decodedLocation.valid()) {
       location = decodedLocation;
@@ -138,41 +136,25 @@
               </div>
             </div>
 
-            <div on:paste={handlePaste}>
-              <Label for="group-location" class="mb-2">Coordinates</Label>
-              <ButtonGroup id="group-location" class="w-full">
-                <Input
-                  id="input-latitude"
-                  bind:value={location.latitude}
-                  disabled={locationMode === LocationMode.Geolocation}
-                  placeholder="Latitude (decimal)"
-                />
-                <Input
-                  id="input-longitude"
-                  bind:value={location.longitude}
-                  disabled={locationMode === LocationMode.Geolocation}
-                  placeholder="Longitude (decimal)"
-                />
-                {#if locationMode === LocationMode.Coordinates}
-                  <Tooltip type="auto" triggeredBy="#btn-locate">Geolocate</Tooltip>
-                {/if}
-                <Button
-                  id="btn-locate"
-                  on:click={handleLocate}
-                  disabled={locationMode === LocationMode.Geolocation || locationLoading}
-                  size="sm"
-                  outline
-                  class="!p-3"
-                  color="light"
-                >
-                  {#if locationLoading}
-                    <Spinner size="5" color="gray" />
-                  {:else}
-                    <Icon icon="radix-icons:crosshair-2" class="text-lg" />
-                  {/if}
-                </Button>
-              </ButtonGroup>
-            </div>
+            {#if locationMode === LocationMode.Coordinates}
+              <div class="w-full">
+                <Label for="group-search" class="mb-2">Coordinates</Label>
+                <div on:paste={handlePaste}>
+                  <ButtonGroup id="group-location" class="w-full">
+                    <Input id="input-latitude" bind:value={location.latitude} placeholder="Latitude (decimal)" />
+                    <Input id="input-longitude" bind:value={location.longitude} placeholder="Longitude (decimal)" />
+                    <Tooltip type="auto" triggeredBy="#btn-geolocate">Geolocate</Tooltip>
+                    <Button id="btn-geolocate" on:click={handleGeolocation} disabled={locationGeolocationLoading} size="sm" outline class="!p-3" color="light">
+                      {#if locationGeolocationLoading}
+                        <Spinner size="5" color="gray" />
+                      {:else}
+                        <Icon icon="radix-icons:crosshair-2" class="text-lg" />
+                      {/if}
+                    </Button>
+                  </ButtonGroup>
+                </div>
+              </div>
+            {/if}
           {/if}
 
           <div>
