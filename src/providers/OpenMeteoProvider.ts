@@ -81,6 +81,7 @@ export class OpenMeteoProvider implements Provider {
     'weathercode',
     'pressure_msl',
     'visibility',
+    'uv_index',
     'windspeed_10m',
     'winddirection_10m',
     'precipitation_probability',
@@ -146,7 +147,7 @@ export class OpenMeteoProvider implements Provider {
     const currentDailyIndex = data.current_weather.time < data.daily.time[1] ? 0 : 1;
     const currentHourlyIndex = data.hourly.time
       .map((t: any, i: number) => [Math.abs(t - data.current_weather.time), i])
-      .sort((a: [number, number], b: [number, number]) => a[0] > b[0])[0][1];
+      .sort((a: [number, number], b: [number, number]) => a[0] - b[0])[0][1];
 
     const current: CurrentWeather = {
       timestamp: new Date(data.current_weather.time * 1000),
@@ -162,6 +163,7 @@ export class OpenMeteoProvider implements Provider {
       wind_direction: data.current_weather.winddirection,
       pressure: data.hourly.pressure_msl[currentHourlyIndex],
       visibility: data.hourly.visibility[currentHourlyIndex] / 1000,
+      uv_index: Math.round(data.hourly.uv_index[currentHourlyIndex]),
       hourly: hourlyData
         .filter((h: any) => h.time >= data.current_weather.time && h.time < data.current_weather.time + 90000)
         .map((h: any) => ({

@@ -78,7 +78,7 @@ export class WeatherFlowProvider implements Provider {
       wind_speed: data.current_conditions.wind_avg * (3600 / 1000),
       wind_direction: data.current_conditions.wind_direction,
       pressure: data.current_conditions.sea_level_pressure,
-      uv_index: data.current_conditions.uv,
+      uv_index: Math.round(data.current_conditions.uv),
       visibility: undefined,
       hourly: data.forecast.hourly
         .filter((h: any) => h.time >= data.current_conditions.time && h.time < data.current_conditions.time + 90000)

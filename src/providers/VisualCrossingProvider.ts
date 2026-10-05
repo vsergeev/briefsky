@@ -76,7 +76,7 @@ export class VisualCrossingProvider implements Provider {
       wind_speed: data.currentConditions.windspeed,
       wind_direction: data.currentConditions.winddir,
       pressure: data.currentConditions.pressure,
-      uv_index: data.currentConditions.uvindex,
+      uv_index: Math.round(data.currentConditions.uvindex),
       visibility: data.currentConditions.visibility,
       hourly: data.days[0].hours
         .concat(data.days[1].hours)
